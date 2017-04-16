@@ -29,7 +29,7 @@ extract.feature<-features %in% data.info$code
 sum(extract.feature)
 extract.data<-raw[,extract.feature]
 extract.data<-cbind(challengeID=raw[,1],extract.data)
-
+posi.data<-extract.data[,-col(extract.data)<0]
 write.csv(extract.data,file = "~/GitHub/Spr2017-proj5-grp3/data/extractdata.csv")
 ```
 
@@ -42,6 +42,26 @@ label.train=na.omit(label.train)
 trainIndex=extract.data$challengeID %in% label.train$challengeID
 data.train<-extract.data[trainIndex,]
 
+```
+
+
+```{r}
+library(e1071)
+library(tree)
+
+set.seed (1)
+i.train = sample(1:nrow(data.train), nrow(data.train)*0.75)
+dtrain=data.train[i.train,]
+dtest=data.train[-i.train,]
+ltrain=label.train$gpa[i.train]
+dt=cbind(ltrain,dtrain[,-1])
+
+tree.ff=tree(as.numeric(ltrain)~.,data=dt)
+
+cv.d <- cv.tree(tree.boston,FUN = prune.misclass)
+prune.d <- prune.misclass(tree.boston,best = 7)
+tree.pred <- predict(prune.d,subset(dtest,select=-y), type = "class")
+error <- mean(tree.pred != dtest$y)
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
