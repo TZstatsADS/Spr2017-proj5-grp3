@@ -46,6 +46,7 @@ ED=ED[,which(unlist(lapply(ED, function(x)!(sum(x %in% c("-9","-6","-3"))/obs>=0
 extract.data<-as.data.frame(ED)
 extract.data[ extract.data == "-9"| extract.data == "-6"|extract.data == "-3"]<-NA
 
+cols=ncol(extract.data)
 #remove rows with NA values count for more than 70%
 extract.data <- extract.data[ apply(extract.data, 1, function(x){!sum(is.na(x))/cols>=0.7}),]
 
@@ -56,7 +57,7 @@ extract.data <- extract.data[ apply(extract.data, 1, function(x){!sum(is.na(x))/
 #BG_1=BG[,which(unlist(lapply(BG, function(x)!(sum(is.na(x))/obs>=0.8)))),with=F]
 #BG_1=BG[,which(unlist(lapply(BG, function(x)!(sum(x %in% c("-9","-6"))/obs>=0.8)))),with=F]
 
-write.csv(extract.data,file = "~/GitHub/Spr2017-proj5-grp3/data/extractdata.csv")
+#write.csv(extract.data,file = "~/GitHub/Spr2017-proj5-grp3/data/extractdata.csv")
 ```
 
 
