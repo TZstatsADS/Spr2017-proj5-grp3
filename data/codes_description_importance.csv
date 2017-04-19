@@ -1,0 +1,65 @@
+"","Codes","Description","Decision","Importance Score"
+"1","k5a3d","A3D. Your dad misses events or activities that are important to you","Confirmed",2.86098575585282
+"2","k5g2c","G2C. I worry about taking tests","Confirmed",4.13123892307529
+"3","k5g2d","G2D. It's hard for me to pay attention","Confirmed",3.0704264260679
+"4","k5g2h","G2H. It's hard for me to finish my schoolwork","Confirmed",3.70037802486112
+"5","k5g2i","G2I. I worry about doing well in school","Confirmed",3.45798546466047
+"6","k5g2m","G2M. I get in trouble for talking and disturbing others","Confirmed",3.06714414031163
+"7","m5g19a","G19A. Frequency you had 4 or more drinks in one day in past 12 months","Confirmed",2.80817709773748
+"8","f5e6a","E6A. Father could count on someone to co-sign for a bank loan for $5000","Confirmed",3.02354434657867
+"9","f5i13","i13. how much you earn in that job, before taxes","Confirmed",4.99964631371208
+"10","f5i19a","I19A. Amount earned from all regular jobs in past 12 months","Confirmed",2.97421964191736
+"11","f5j1","J1. Total household income before taxes/deductions in past 12 months","Confirmed",4.48817727942113
+"12","f5j4a","J4A. Name on bank account","Confirmed",4.49366146249358
+"13","f5j6b","J6B. Amount owed on your vehicle","Confirmed",2.80828228243378
+"14","f5j6c","J6C. Value of vehicle if sold","Confirmed",5.35983181082546
+"15","f5k7","K7. Number of child's close friends you know by sight and first and last name","Confirmed",5.17339204547603
+"16","f5k14b","K14B. In past month, you played sports or did outdoor activities with child","Confirmed",2.77089601398089
+"17","p5i31h","I31H. Frequency father talked about day with child in past month","Confirmed",3.12800760607621
+"18","p5i34","I34. Number of child's close friends father knows by sight, first and last name","Confirmed",3.42841594158829
+"19","p5j4b","J4B. Child receives free or reduced price lunch","Confirmed",3.8377799277809
+"20","p5q3bt","Q3BT. Child shows off or clowns","Confirmed",3.69783455765449
+"21","p5q3bw","Q3BW. Child is inattentive or easily distracted","Confirmed",4.0687625782867
+"22","hv5_ppvtss","PPVT standard score","Confirmed",8.64524729421539
+"23","hv5_wj9ss","Woodcock Johnson Test 9 standard score","Confirmed",6.59708475307848
+"24","hv5_wj10ss","Woodcock Johnson Test 10 standard score","Confirmed",10.1995076814951
+"25","hv5_wj9raw","Woodcock Johnson Test 9 raw score","Confirmed",5.84840645917337
+"26","t5b1d","B1D. Child says nice things about self/others when appropriate","Confirmed",4.11409353171767
+"27","t5b1f","B1F. Child uses free time in an acceptable way","Confirmed",3.75888820631422
+"28","t5b1g","B1G. Child finishes class assignments with time limits","Confirmed",3.98984368114111
+"29","t5b1h","B1H. Child makes friends easily","Confirmed",2.70399053877805
+"30","t5b1l","B1L. Child uses time appropriately while waiting for help","Confirmed",4.24224125211892
+"31","t5b1m","B1M. Child produces correct schoolwork","Confirmed",4.78906102747865
+"32","t5b1p","B1P. Child follows your directions","Confirmed",3.98720245944827
+"33","t5b1u","B1U. Child ignores peer distractions when doing class work","Confirmed",4.16089934541498
+"34","t5b1v","B1V. Child keeps desk clean and neat without being reminded","Confirmed",4.25177406362353
+"35","t5b1w","B1W. Child attends to your instructions","Confirmed",5.34048468551115
+"36","t5b1x","B1X. Child easily makes transition from one activity to another","Confirmed",3.24206403365493
+"37","t5b2a","B2A. Child pays attention well","Confirmed",3.69741890109149
+"38","t5b2b","B2B. Child persists in completing tasks","Confirmed",5.26156462070137
+"39","t5b2c","B2C. Child works independently","Confirmed",4.16071829923035
+"40","t5b2d","B2D. Child easily adapts to change in routine","Confirmed",3.20151515801689
+"41","t5b2e","B2E. Child keeps belongings organized","Confirmed",3.82524387132921
+"42","t5b2f","B2F. Child shows eagerness to learn new things","Confirmed",3.78364576441017
+"43","t5b2g","B2G. Child follows classroom rules","Confirmed",3.33155567487108
+"44","t5b4i","B4I. Child cannot remain still","Confirmed",3.81256112182153
+"45","t5b4k","B4K. Child leaves seat when remaining seated is expected","Confirmed",3.71238033687431
+"46","t5b4n","B4N. Child has a short attention span","Confirmed",3.72834100066944
+"47","t5b4r","B4R. Child lacks interest in schoolwork","Confirmed",4.63636578618677
+"48","t5b4s","B4S. Child has distractibility or attention span problem","Confirmed",3.97999707313232
+"49","t5b4y","B4Y. Child fails to finish things he or she starts","Confirmed",4.24806482499344
+"50","t5c13a","C13A. Child's language and literacy skills","Confirmed",5.09122719553309
+"51","t5c13b","C13B. Child's science and social studies","Confirmed",6.67088782050853
+"52","t5c13c","c13C. Child's mathematical skills","Confirmed",6.51794793773215
+"53","t5c16","C16. Frequency child works to best of her/his ability","Confirmed",3.39875322914531
+"54","cf5age","Constructed - Father's age (years)","Confirmed",3.74709327434633
+"55","cf5edu","Father's education: year 9","Confirmed",5.95335435119544
+"56","cm5hhinc","Constructed - Mother's Household income (with imputed values)","Confirmed",5.45192506922193
+"57","cf5hhinc","Constructed - Father's Household income (with imputed values)","Confirmed",6.15517055104785
+"58","cf5hhincb","Constructed - Household income mother report for married/cohab if available (wit","Confirmed",7.18120360752298
+"59","cm5povco","Constructed - Mother's household income/poverty threshold at 9-year","Confirmed",4.7638629909815
+"60","cf5povco","Constructed - father's household income/poverty threshold at 9-year","Confirmed",6.28225875621896
+"61","cf5povcob","Constructed - father's household income/poverty threshold at 9-year, mother repo","Confirmed",6.9597308956649
+"62","cm5povca","Constructed - Mother's poverty category at 9-year","Confirmed",2.7077082020414
+"63","cf5povca","Constructed - Father's poverty category at 9-year","Confirmed",3.87572358328842
+"64","cf5povcab","Constructed - Father's poverty category at 9-year, mother reports for married/co","Confirmed",3.59257106117347
