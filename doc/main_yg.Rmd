@@ -39,8 +39,8 @@ extract.data<-cbind(challengeID=background[,1],extract.data)
 ED<-as.data.table(extract.data)
 obs<-nrow(extract.data)
 
-ED=ED[,which(unlist(lapply(ED, function(x)!(sum(is.na(x))/obs>=0.8)))),with=F]
-ED=ED[,which(unlist(lapply(ED, function(x)!(sum(x %in% c("-9","-6","-3"))/obs>=0.8)))),with=F]
+ED=ED[,which(unlist(lapply(ED, function(x)!(sum(is.na(x))/obs>=0.5)))),with=F]
+ED=ED[,which(unlist(lapply(ED, function(x)!(sum(x %in% c("-9","-6","-3"))/obs>=0.5)))),with=F]
 
 #replace "-9","-6","-3" with NA
 extract.data<-as.data.frame(ED)
@@ -48,7 +48,7 @@ extract.data[ extract.data == "-9"| extract.data == "-6"|extract.data == "-3"]<-
 
 cols=ncol(extract.data)
 #remove rows with NA values count for more than 70%
-extract.data <- extract.data[ apply(extract.data, 1, function(x){!sum(is.na(x))/cols>=0.7}),]
+extract.data <- extract.data[ apply(extract.data, 1, function(x){!sum(is.na(x))/cols>=0.5}),]
 
 
 ###################################
@@ -68,6 +68,7 @@ label.train<-label[,1:2]
 label.train=na.omit(label.train)
 trainIndex=extract.data$challengeID %in% label.train$challengeID
 data.train<-extract.data[trainIndex,]
+data.train<-as.data.frame(data.train)
 
 ```
 
@@ -75,15 +76,19 @@ data.train<-extract.data[trainIndex,]
 ```{r}
 library(e1071)
 library(tree)
+library(caret)
 
-set.seed (1)
-i.train = sample(1:nrow(data.train), nrow(data.train)*0.75)
+
+#set.seed (1)
+i.train = sample(1:nrow(data.train), nrow(data.train)*0.9)
 dtrain=data.train[i.train,]
 dtest=data.train[-i.train,]
 ltrain=label.train$gpa[i.train]
-dt=cbind(ltrain,dtrain[,-1])
 
-tree.ff=tree(as.numeric(ltrain)~.,data=dt)
+dt=cbind(ltrain,dtrain[,-1])
+dt=as.data.frame(dt)
+
+tree.ff=tree(ltrain~.,dtrain)
 
 cv.d <- cv.tree(tree.boston,FUN = prune.misclass)
 prune.d <- prune.misclass(tree.boston,best = 7)
