@@ -1,0 +1,161 @@
+"","RFcodes","data.info$description[data.info$code == RFcodes[i]]","scores"
+"1","k5a1a","A1A. How often PCG knows what you do during your free time",0.90817320828751
+"2","k5a1d","A1D. How often PCG makes you tell where you are going and with whom",0.871514279926209
+"3","k5a2a","A2A. Your mom talks over important decisions with you",0.888450717748884
+"4","k5a2f","A2F. How well you and your mom share ideas or talk about things that matter",1.14607869923779
+"5","k5a3b","A3B. Your dad listens to your side of an argument",0.875866880433073
+"6","k5a3d","A3D. Your dad misses events or activities that are important to you",0.885616533436149
+"7","k5b1a","B1A. Frequency mom explained why something you did was wrong",1.2986713606196
+"8","k5b1b","B1B. Frequency mom sent you to your room, took away privileges, or grounded you",1.12067427819912
+"9","k5b1c","B1C. Frequency mom shouted, yelled, screamed, swore or cursed at you",0.898863956112397
+"10","k5b1d","B1D. Frequency mom spanked or hit you",1.05102937947739
+"11","k5d1a","D1A. Amount of time on a weekday you hang out with friends",1.31271388868005
+"12","k5d1b","D1B. Amount of time on a weekday you hang out with family members",0.863467337629501
+"13","k5d1d","D1D. Amount of time on a weekday you do school work on the computer",0.913808107771072
+"14","k5d1f","D1F. Amount of time on a weekday you play computer games on the computer or TV",1.44199672400486
+"15","k5d1g","D1G. Amount of time on a weekday you watch TV and movies",1.34289773371452
+"16","k5d1h","D1H. Amount of time on a weekday you attend practice/lessons/after-school progra",1.42142332602193
+"17","k5d2","D2. People you are usually with right after school",1.34283168503251
+"18","k5e1b","E1B. Frequency you felt close to people at your school",0.892430724150591
+"19","k5e2a","E2A. Frequency kids picked on you or said mean things to you",1.90735059602749
+"20","k5g1c","G1C. I keep my things orderly",0.868660755588811
+"21","k5g1d","G1D. I try to do my best on all my work",1.08300087601771
+"22","k5g2a","G2A. I feel angry when I have trouble learning something",0.848609090522822
+"23","k5g2b","G2B. I often argue with other kids",1.14195928252582
+"24","k5g2c","G2C. I worry about taking tests",1.50155261858993
+"25","k5g2d","G2D. It's hard for me to pay attention",2.28834601752234
+"26","k5g2f","G2F. I get distracted easily",1.17259051301387
+"27","k5g2h","G2H. It's hard for me to finish my schoolwork",2.37246670248978
+"28","k5g2i","G2I. I worry about doing well in school",1.27282412331794
+"29","k5g2j","G2J. I worry about finishing my work",0.986096911655465
+"30","k5g2k","G2K. I worry about having someone to play with",0.85998221950792
+"31","k5g2l","G2L. I feel ashamed when I make mistakes at school",1.05469213613997
+"32","k5g2m","G2M. I get in trouble for talking and disturbing others",2.02759895380157
+"33","m5a4","A4. Your relationship with the child's biofather now",1.16990079005084
+"34","m5b3","B3. Frequency father spent one or more hours a day with child",1.03541689970985
+"35","m5c1","C1. Mother's relationship with father",1.18949787378998
+"36","m5h2","H2. Frequency you attend religious services",1.10429772224449
+"37","m5i13p","I13P. Unit: Amount you usually earn in this job before taxes/deductions",1.30746271048583
+"38","m5j1","J1. Total household income before taxes/deductions in past 12 months",2.49847120460216
+"39","m5hhsize","Num. of people in mother's hh -Includes mother & foc. child (if lives with mothe",1.10045580077195
+"40","f5a4","A4. Relationship with child's biological mother now",1.20729876858465
+"41","f5c1","C1. Your relationship with child's mother",0.85051241096194
+"42","f5g19","G19. The largest number of drinks you had in any single day in past 12 months",0.829280089486968
+"43","f5g35","G35. Age when you had sexual intercourse for the first time",2.93789491513969
+"44","f5h2","H2. Frequency you attend religious services",0.965324158029669
+"45","f5i10","I10. Number of hours you usually work per week",1.26850211930723
+"46","f5i13","i13. how much you earn in that job, before taxes",4.55653434177765
+"47","f5j1","J1. Total household income before taxes/deductions in past 12 months",3.0564860683809
+"48","f5k1","K1. How you feel about yourself as a father",0.936080339786351
+"49","cf5adult","Number of adults (18+) in father's household. Includes father.",1.29063313279846
+"50","cf5kids","Number of children (<18) in father's household. Includes focal child (if focal l",0.806308597512252
+"51","p5h9","H9. Number of times child saw doctor/nurse due to illness, accident, injury",0.801155529087357
+"52","p5h16a","H16A. Number of dental fillings child has had",1.36133741161554
+"53","p5i1a","I1A. Frequency you did household chores with child in past month",1.07448640286779
+"54","p5i1b","I1B. Frequency you played sports or outdoor activities with child in past month",0.90195064981655
+"55","p5i1c","I1C. Frequency you watch TV or videos with child in past month",0.840995621627915
+"56","p5i1d","I1D. Frequency you played video or computer games with child in past month",1.07078644671483
+"57","p5i1e","I1E. Frequency you read books or talked about books with child in past month",1.1990083320266
+"58","p5i1f","I1F. Frequency you participated in indoor activities with child in past month",0.854860870461893
+"59","p5i1g","I1G. Frequency you talked about current events with child in past month",0.841428603324628
+"60","p5i3","I3. Amount of time child watches TV or videos on a weekday",1.1580583783395
+"61","p5i4","I4. Amount of time child watches TV or videos on a weekend day",1.44085431909906
+"62","p5i5","I5. Amount of time child plays outdoors on typical weekday",1.54025702106619
+"63","p5i6","I6. Amount of time child plays outdoors on typical weekend day",1.4466865899275
+"64","p5i11","I11. Number of weeknights child goes to bed at said time",0.882456208355068
+"65","p5i12","I12. Number of hours child sleeps on weeknights",0.829248061667527
+"66","p5i13","I13. Number of TVs in home",1.22041151560984
+"67","p5i15","I15. Number of hours TV is on",2.60794143110278
+"68","p5i18b","I18B. Number of hours per day child uses computer",1.05438176327265
+"69","p5i22a","I22A. You can't hear yourself think in home",1.13038833086129
+"70","p5i23","I23. Number of child's close friends you know by sight, first and last name",2.51476895218021
+"71","p5i24","I24. Number of child's close friends' parents you know by sight, first and last",0.920857345153122
+"72","p5i25","I25. Number of child's close friends you saw last week",1.43656046862383
+"73","p5i29","I29. Number of nights family eats dinner together",1.04428362578797
+"74","p5i31h","I31H. Frequency father talked about day with child in past month",1.18120126017467
+"75","p5i32c","I32C. Frequency father attended school or class event in this/last school year",0.976649195075446
+"76","p5i33a","I33A. Frequency father shouted/screamed at child in past year",1.12015290540659
+"77","p5i33b","I33B. Frequency father spanked/slapped child in past year",0.813245345824129
+"78","p5i34","I34. Number of child's close friends father knows by sight, first and last name",1.61551861722111
+"79","p5j2a","J2A. Number of servings of milk child has on typical day",0.932729797266435
+"80","p5j2b","J2B. Number of servings of other dairy products child has on typical day",0.876422031579195
+"81","p5j2c","J2C. Number of servings child has of fruit juice on typical day",1.23323294156621
+"82","p5j2f","J2F. Number of servings of fresh fruit or vegetables child has on typical day",1.14079531136929
+"83","p5j2g","J2G. Number of servings of candy or sweets child has on typical day",1.09915881762802
+"84","p5j2h","J2H. Number of servings of frozen or canned vegetables child has on typical day",1.47775966860968
+"85","p5j2j","J2J. Number of servings of starches (bread, cereal) child has on typical day",1.06220538060178
+"86","p5j4b","J4B. Child receives free or reduced price lunch",1.5715648118446
+"87","p5j7","J7. Amount paid for groceries or food used at home in last month",3.02797741372373
+"88","p5j10","J10. Amount of money spent eating out in last month",3.54026018111778
+"89","p5k1a","K1A. Taking care of children is harder than I thought it would be",1.0949548814827
+"90","p5k1b","K1B. I feel trapped by my responsibilities as a parent",0.841271178433663
+"91","p5k1c","K1C. I find taking care of my child is much more work than pleasure",1.03930503702537
+"92","p5l5","L5. Number of days per week you drop off or pick up child",0.855804195988509
+"93","p5l13f","L13F. Gifted and talented program",0.842023544886564
+"94","p5l17d","L17D. Discussed homework not done with child's teacher in this/last school year",0.967794835511967
+"95","p5l18","L18. Who usually initiated the contact",1.18939801281186
+"96","p5m1","M1. Number of families on block know well",1.93510840936498
+"97","p5m2e","M2E. Neighbors get involved if fire station budget cut",1.50748745887324
+"98","p5m3d","M3D. Amount agree people in neighborhood do not share values",0.89409967109475
+"99","p5q1a","Q1A. Parent has explained why something child did was wrong",0.884003022873446
+"100","p5q1b","Q1B. Parent has put child in ""time out"" or sent child to room",1.32066100149004
+"101","p5q1e","Q1E. Parent has given child something else to do instead of what child was doing",1.32903274503638
+"102","p5q1f","Q1F. Parent has shouted, yelled or screamed at child",1.51250835867466
+"103","p5q1g","Q1G. Parent has spanked child on bottom with bare hand",1.12668183186226
+"104","p5q1h","Q1H. Parent has swore or cursed at child",0.824871530329577
+"105","p5q1j","Q1J. Parent has threatened to spank or hit child but did not actually do it",1.34592258247748
+"106","p5q1k","Q1K. Parent has slapped child on hand, arm or leg",2.67817771034722
+"107","p5q1l","Q1L. Parent has taken away privileges",1.16654601739567
+"108","p5q3g","Q3G. Child can't concentrate, can't pay attention for long",0.986482645331951
+"109","p5q3v","Q3V. Child is disobedient at school",0.864216808785291
+"110","p5q3bt","Q3BT. Child shows off or clowns",1.06972469842863
+"111","p5q3bw","Q3BW. Child is inattentive or easily distracted",3.79397278123073
+"112","p5q3cg","Q3CG. Child has sudden changes in mood or feelings",1.15625169437482
+"113","p5q3dk","Q3DK. Child starts conversations rather than waiting for others to talk first",0.821043798343003
+"114","hv5_dspr","Digit Span percentile rank",1.79179335921902
+"115","hv5_dsss","Digit Span scaled score",1.46860490104889
+"116","hv5_dsraw","Digit Span total raw score",1.69076873461799
+"117","hv5_ppvtss","PPVT standard score",19.1109435101295
+"118","hv5_wj9ss","Woodcock Johnson Test 9 standard score",5.95231024574577
+"119","hv5_wj10ss","Woodcock Johnson Test 10 standard score",19.8149199466538
+"120","hv5_wj9raw","Woodcock Johnson Test 9 raw score",2.90711727676967
+"121","o5a8","A8. Best describe the home or building",0.850070086749079
+"122","o5f5","F5. Persistence of child when completing the Digit Span Test",0.935545715798575
+"123","o5g4","G4. Parent/PCG's ability to articulate answers",1.43400735039095
+"124","hv5_9a1","10a1. child weight measurements 1",1.52427096824804
+"125","hv5_9a2","10a2. child weight measurements 2",1.54497308758175
+"126","hv5_11a1","11a1. child height measurements 1",2.01800547814505
+"127","hv5_11a2","11a2. child height measurements 2",2.00964038678365
+"128","hv5_cwtlb","child weight(lbs.)-from mult. measures",1.40369914726944
+"129","hv5_chtcm","child height(cm.)-from mult. measures",2.58372230000848
+"130","hv5_cwtkg","child's weight in kg",1.31760391415029
+"131","hv5_cbmi","child's bmi",1.8996862216862
+"132","hv5_agem","child's age in months",1.49632346305474
+"133","hv5_waz","Child's weight-for-age Z-score",1.65076101497518
+"134","hv5_wap","Child's weight-for-age percentile",1.64810883279335
+"135","hv5_bmiz","Child's Body Mass Index Z-score",2.23016815798465
+"136","hv5_bmip","Child's Body Mass Index percentile",2.20822829421623
+"137","hv5_haz","Child's height-for-age Z-score",2.51250222850334
+"138","hv5_hap","Child's height-for-age percentile",2.7588717236958
+"139","hv5_8a1","8A1. BIO MOTHER weight measurements 1",1.66458535728855
+"140","hv5_8a2","8A2. BIO MOTHER weight measurements 2",1.64099216043671
+"141","hv5_mwtlb","BioMom's weight in lb",1.83482884886541
+"142","hv5_mhtcm","BioMom's height in cm",3.19718804896563
+"143","hv5_mwtkg","BioMom's weight in kg",1.76809143069668
+"144","hv5_mbmi","BioMom's BMI",1.84273612149651
+"145","hv5_mbmiz","BioMom BMI Z-score",1.94842282770514
+"146","cf5age","Constructed - Father's age (years)",2.36975372911021
+"147","cm5age","Constructed - Mother's age (years)",3.23485123364142
+"148","cm5b_age","Constructed - Child age at time of mother interview (months)",1.56624735863658
+"149","cf5b_age","Constructed - Child age at time of father interview (months)",1.7083204502724
+"150","cm5fevjail","Constructed - mother report, father has spent time in jail by mother nine-year i",0.841530766224586
+"151","cm5edu","Mother's education: year 9",1.56949952789279
+"152","cf5edu","Father's education: year 9",2.32304770799968
+"153","cm5hhinc","Constructed - Mother's Household income (with imputed values)",12.442906984822
+"154","cf5hhinc","Constructed - Father's Household income (with imputed values)",4.85427910701778
+"155","cf5hhincb","Constructed - Household income mother report for married/cohab if available (wit",8.18058118980404
+"156","cm5povco","Constructed - Mother's household income/poverty threshold at 9-year",7.28374372565643
+"157","cf5povco","Constructed - father's household income/poverty threshold at 9-year",4.09128691670462
+"158","cf5povcob","Constructed - father's household income/poverty threshold at 9-year, mother repo",7.80164090781006
+"159","cm5povca","Constructed - Mother's poverty category at 9-year",1.18478815526655
+"160","cf5povca","Constructed - Father's poverty category at 9-year",0.808837302041295
