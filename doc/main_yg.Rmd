@@ -69,18 +69,16 @@ ED.categorical[is.na(ED.categorical)==TRUE]<-"-3"
 anyNA(ED.categorical)
 
 #add a binary indicator to indicate if NA
-ED.contna=ED.continuous[,apply(ED.continuous,2, function(x) anyNA(x))]
-ED.indina=ED.contna
-ED.indina[is.na(ED.contna)]<-1
-ED.indina[!is.na(ED.contna)]<-0
-colnames(ED.indina)<-paste0(colnames(ED.contna),"_isna")
+ED.indina=apply(ED.continuous,c(1,2), function(x) 
+  if(any(x %in% c("-9","-8","-7","-6","-5","-3","-2","-1",NA))) {x}else{0} )
 
+ED.indina[is.na(ED.indina)]="-3"
+ED.indina=ED.indina[,colSums(ED.indina!=0)>0]
+ED.indina=as.data.frame(ED.indina)
+colnames(ED.indina)<-paste0(colnames(ED.indina),"_isna")
+
+ED.continuous[is.na(ED.continuous)]=0
 #replace NA in continuous data with median (actually can replace with any number)
-library(Hmisc)
-for(i in colnames(ED.contna))
-{
-  ED.continuous[,i] = impute(ED.continuous[,i], fun = median)  
-}
 
 anyNA(ED.continuous)
 
