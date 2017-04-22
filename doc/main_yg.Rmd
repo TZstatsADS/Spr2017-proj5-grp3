@@ -83,7 +83,7 @@ ED.continuous[is.na(ED.continuous)]=0
 anyNA(ED.continuous)
 
 #combine the data
-ED.final<-cbind(ED.continuous$challengeID,ED.categorical,ED.continuous[,-1],ED.indina)
+ED.final<-cbind(challengeID=ED.continuous$challengeID,ED.categorical,ED.continuous[,-1],ED.indina)
 
 anyNA(ED.final)
 
@@ -93,17 +93,50 @@ write.csv(ED.final,file="~/GitHub/Spr2017-proj5-grp3/data/NAreplaced.csv")
 
 
 
+
 ```{r}
 label<-read.csv("~/Documents/FFChallenge/train.csv")
 
 label.train<-label[,1:2]
 label.train=na.omit(label.train)
-trainIndex=extract.data$challengeID %in% label.train$challengeID
-data.train<-extract.data[trainIndex,]
+trainIndex=ED$challengeID %in% label.train$challengeID
+data.train<-ED.final[trainIndex,]
 data.train<-as.data.frame(data.train)
 
 ```
 
+feature selection
+```{r}
+library(Boruta)
+
+model.features = Boruta(data.train[,-1], label.train$gpa, maxRuns = 3000,holdHistory = FALSE)
+
+
+results = as.data.frame(model.features$finalDecision)
+which(results!="Rejected")
+Bcodes = rownames(results)[which(results!="Rejected")]
+```
+
+
+What are the descriptions of the features (Boruta)?
+```{r}
+des = data.frame()
+#score = data.frame()
+for (i in 1:length(Bcodes))
+{
+  if(Bcodes[i] %in% data.info$code)
+  {
+    des = rbind(des, as.data.frame(data.info$description[data.info$code==Bcodes[i]]))
+   # score = rbind(score, as.data.frame(imp$meanImp[which(rownames(imp)==Bcodes[i])]))
+
+  }
+}
+decision = as.data.frame(model.features$finalDecision[model.features$finalDecision!="Rejected"])
+
+Bdf = cbind(Bcodes, des, decision)
+colnames(Bdf) = c("Codes", "Description", "Decision")
+write.csv(Bdf, "../data/codes_description_importance_less_na.csv")
+```
 
 ```{r}
 library(e1071)

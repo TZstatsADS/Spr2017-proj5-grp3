@@ -1,40 +1,66 @@
-"","Codes","Description","Decision","Importance Score"
-"1","k5g1d","G1D. I try to do my best on all my work","Confirmed",0.668882841731043
-"2","k5g2c","G2C. I worry about taking tests","Confirmed",4.13123892307529
-"3","k5g2h","G2H. It's hard for me to finish my schoolwork","Confirmed",3.70037802486112
-"4","k5g2m","G2M. I get in trouble for talking and disturbing others","Confirmed",3.06714414031163
-"5","m5a4","A4. Your relationship with the child's biofather now","Confirmed",1.108285028742
-"6","m5b3","B3. Frequency father spent one or more hours a day with child","Confirmed",1.2949682471274
-"7","m5j1","J1. Total household income before taxes/deductions in past 12 months","Confirmed",2.52288837541519
-"8","f5a4","A4. Relationship with child's biological mother now","Confirmed",1.0035251270238
-"9","f5a8f01","A8F. Your relationship with the mother at biological child's birth","Confirmed",0.622136259915627
-"10","f5g35","G35. Age when you had sexual intercourse for the first time","Confirmed",1.55081475840647
-"11","f5i13","i13. how much you earn in that job, before taxes","Confirmed",4.99964631371208
-"12","f5j1","J1. Total household income before taxes/deductions in past 12 months","Confirmed",4.48817727942113
-"13","p5i23","I23. Number of child's close friends you know by sight, first and last name","Confirmed",1.02849258578307
-"14","p5i30a","I30A. Confirm where BioF lives","Confirmed",0.764261547019112
-"15","p5i34","I34. Number of child's close friends father knows by sight, first and last name","Confirmed",3.42841594158829
-"16","p5j4b","J4B. Child receives free or reduced price lunch","Confirmed",3.8377799277809
-"17","p5l13f","L13F. Gifted and talented program","Confirmed",1.25174565083443
-"18","p5l17d","L17D. Discussed homework not done with child's teacher in this/last school year","Confirmed",1.15156639003545
-"19","p5m1","M1. Number of families on block know well","Confirmed",0.691625081713116
-"20","p5q3bw","Q3BW. Child is inattentive or easily distracted","Confirmed",4.0687625782867
-"21","hv5_ppvtss","PPVT standard score","Confirmed",8.64524729421539
-"22","hv5_wj9ss","Woodcock Johnson Test 9 standard score","Confirmed",6.59708475307848
-"23","hv5_wj10ss","Woodcock Johnson Test 10 standard score","Confirmed",10.1995076814951
-"24","hv5_wj9raw","Woodcock Johnson Test 9 raw score","Confirmed",5.84840645917337
-"25","cf5age","Constructed - Father's age (years)","Confirmed",3.74709327434633
-"26","cm5age","Constructed - Mother's age (years)","Confirmed",2.42683194280323
-"27","cm5fevjail","Constructed - mother report, father has spent time in jail by mother nine-year i","Tentative",1.21579082595634
-"28","cf5fevjail","Constructed - father report, father has spent time in jail by his nine-year inte","Confirmed",1.37473624154568
-"29","cf5edu","Father's education: year 9","Confirmed",5.95335435119544
-"30","cm5hhinc","Constructed - Mother's Household income (with imputed values)","Confirmed",5.45192506922193
-"31","cf5hhinc","Constructed - Father's Household income (with imputed values)","Confirmed",6.15517055104785
-"32","cm5hhimp","Flag var for household income imputation - mothers","Confirmed",1.07997483887302
-"33","cf5hhincb","Constructed - Household income mother report for married/cohab if available (wit","Confirmed",7.18120360752298
-"34","cm5povco","Constructed - Mother's household income/poverty threshold at 9-year","Confirmed",4.7638629909815
-"35","cf5povco","Constructed - father's household income/poverty threshold at 9-year","Confirmed",6.28225875621896
-"36","cf5povcob","Constructed - father's household income/poverty threshold at 9-year, mother repo","Confirmed",6.9597308956649
-"37","cm5povca","Constructed - Mother's poverty category at 9-year","Confirmed",2.7077082020414
-"38","cf5povca","Constructed - Father's poverty category at 9-year","Confirmed",3.87572358328842
-"39","cf5povcab","Constructed - Father's poverty category at 9-year, mother reports for married/co","Confirmed",3.59257106117347
+,Codes,Description,Decision
+1,k5e2a,E2A. Frequency kids picked on you or said mean things to you,Tentative
+2,k5g2c,G2C. I worry about taking tests,Confirmed
+3,k5g2i,G2I. I worry about doing well in school,Confirmed
+4,m5g19a,G19A. Frequency you had 4 or more drinks in one day in past 12 months,Confirmed
+5,f5j4a,J4A. Name on bank account,Confirmed
+6,f5j5a,J5A. Name on credit card,Confirmed
+7,f5j6f,J6F. You or your wife/partner have other loans,Confirmed
+8,p5j4b,J4B. Child receives free or reduced price lunch,Confirmed
+9,p5q3bw,Q3BW. Child is inattentive or easily distracted,Confirmed
+10,p5q3cg,Q3CG. Child has sudden changes in mood or feelings,Confirmed
+11,t5b1d,B1D. Child says nice things about self/others when appropriate,Confirmed
+12,t5b1f,B1F. Child uses free time in an acceptable way,Confirmed
+13,t5b1g,B1G. Child finishes class assignments with time limits,Confirmed
+14,t5b1l,B1L. Child uses time appropriately while waiting for help,Confirmed
+15,t5b1m,B1M. Child produces correct schoolwork,Confirmed
+16,t5b1p,B1P. Child follows your directions,Confirmed
+17,t5b1u,B1U. Child ignores peer distractions when doing class work,Confirmed
+18,t5b1v,B1V. Child keeps desk clean and neat without being reminded,Confirmed
+19,t5b1w,B1W. Child attends to your instructions,Confirmed
+20,t5b1x,B1X. Child easily makes transition from one activity to another,Confirmed
+21,t5b2a,B2A. Child pays attention well,Confirmed
+22,t5b2b,B2B. Child persists in completing tasks,Confirmed
+23,t5b2c,B2C. Child works independently,Confirmed
+24,t5b2d,B2D. Child easily adapts to change in routine,Confirmed
+25,t5b2e,B2E. Child keeps belongings organized,Confirmed
+26,t5b2f,B2F. Child shows eagerness to learn new things,Confirmed
+27,t5b2g,B2G. Child follows classroom rules,Confirmed
+28,t5b4f,B4F. Child actively defies/refuses to comply with adults' requests,Confirmed
+29,t5b4n,B4N. Child has a short attention span,Confirmed
+30,t5b4r,B4R. Child lacks interest in schoolwork,Confirmed
+31,t5b4s,B4S. Child has distractibility or attention span problem,Confirmed
+32,t5b4y,B4Y. Child fails to finish things he or she starts,Confirmed
+33,t5b4z,B4Z. Child does not follow through on instructions and fails to finish homework,Confirmed
+34,t5c8a,C8A. Child has participated in Title I reading/english/language arts,Confirmed
+35,t5c13a,C13A. Child's language and literacy skills,Confirmed
+36,t5c13b,C13B. Child's science and social studies,Confirmed
+37,t5c13c,c13C. Child's mathematical skills,Confirmed
+38,t5c16,C16. Frequency child works to best of her/his ability,Confirmed
+39,cf5edu,Father's education: year 9,Confirmed
+40,cm5povca,Constructed - Mother's poverty category at 9-year,Confirmed
+41,cf5povca,Constructed - Father's poverty category at 9-year,Confirmed
+42,cf5povcab,"Constructed - Father's poverty category at 9-year, mother reports for married/co",Confirmed
+43,f5g35,G35. Age when you had sexual intercourse for the first time,Confirmed
+44,f5i13,"i13. how much you earn in that job, before taxes",Confirmed
+45,f5j1,J1. Total household income before taxes/deductions in past 12 months,Confirmed
+46,f5j6c,J6C. Value of vehicle if sold,Confirmed
+47,f5k7,K7. Number of child's close friends you know by sight and first and last name,Confirmed
+48,p5i34,"I34. Number of child's close friends father knows by sight, first and last name",Confirmed
+49,hv5_dspr,Digit Span percentile rank,Confirmed
+50,hv5_ppvtae,PPVT age equivalency,Confirmed
+51,hv5_ppvtpr,PPVT percentile rank,Confirmed
+52,hv5_ppvtss,PPVT standard score,Confirmed
+53,hv5_wj9ss,Woodcock Johnson Test 9 standard score,Confirmed
+54,hv5_wj9ae,Woodcock Johnson Test 9 age equivalency,Confirmed
+55,hv5_wj10ss,Woodcock Johnson Test 10 standard score,Confirmed
+56,hv5_wj10pr,Woodcock Johnson Test 10 percentile rank,Confirmed
+57,hv5_wj10ae,Woodcock Johnson Test 10 age equivalency,Confirmed
+58,hv5_wj9raw,Woodcock Johnson Test 9 raw score,Confirmed
+59,cf5age,Constructed - Father's age (years),Confirmed
+60,cm5hhinc,Constructed - Mother's Household income (with imputed values),Confirmed
+61,cf5hhinc,Constructed - Father's Household income (with imputed values),Confirmed
+62,cf5hhincb,Constructed - Household income mother report for married/cohab if available (wit,Confirmed
+63,cm5povco,Constructed - Mother's household income/poverty threshold at 9-year,Confirmed
+64,cf5povco,Constructed - father's household income/poverty threshold at 9-year,Confirmed
+65,cf5povcob,"Constructed - father's household income/poverty threshold at 9-year, mother repo",Confirmed
