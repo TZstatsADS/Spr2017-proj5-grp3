@@ -6,7 +6,7 @@ output: html_notebook
 
 
 Step 0: load the raw data, load the age 9 features, extract age 9 data
-```{r}
+```{r, include=FALSE}
 library(data.table)
 library(stringr)
 library(dmm)
@@ -67,9 +67,10 @@ ED.continuous=ED1[,ED.unique>10]
 ED.categorical[is.na(ED.categorical)==TRUE]<-"-3"
 anyNA(ED.categorical)
 
+categorical=colnames(ED.categorical)
 #change from list to data frame
-ED.categorical=lapply(ED.categorical,factor)
-ED.categorical=as.data.frame(ED.categorical)
+#ED.categorical=lapply(ED.categorical,factor)
+#ED.categorical=as.data.frame(ED.categorical)
 ```
 
 Factor data manual cleaning
@@ -142,11 +143,14 @@ t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
 ED.factor$hv5_dsae=t2
 ED.factor=cbind(ED.factor,hv5_dsae_isna)
 
-ED.factor[,grep("*isna",colnames(ED.factor),value=TRUE)]=as.data.frame(lapply(ED.factor[,grep("*isna",colnames(ED.factor),value=TRUE)],factor))
+
+#ED.factor[,grep("*isna",colnames(ED.factor),value=TRUE)]=as.data.frame(lapply(ED.factor[,grep("*isna",colnames(ED.factor),value=TRUE)],factor))
 
 for (i in colnames(ED.factor)){
   ED.factor[,i]=impute(ED.factor[,i],fun=median)
 }
+
+categorical=c(categorical,colnames(ED.factor[,grep("*isna",colnames(ED.factor))]))
 
 ```
 
@@ -164,7 +168,9 @@ ED.indina[is.na(ED.indina)]="-3"
 ED.indina=ED.indina[,colSums(ED.indina!=0)>0]
 ED.indina=as.data.frame(ED.indina)
 colnames(ED.indina)<-paste0(colnames(ED.indina),"_isna")
-ED.indina=as.data.frame(lapply(ED.indina,factor))
+
+categorical=c(categorical,colnames(ED.indina))
+#ED.indina=as.data.frame(lapply(ED.indina,factor))
 
 ED.cont2[ED.cont2=="-9"|ED.cont2=="-6"]<-NA
 ED.cont2[ED.cont2=="-8"|ED.cont2=="-7"]<-NA
@@ -180,34 +186,45 @@ for(i in colnames(ED.cont2)){
 
 anyNA(ED.cont2)
 
+continuous=c(colnames(ED.cont2),colnames(ED.factor[,1:7]))
+continuous=continuous[-1]
+
 #combine the data
 ED.final<-cbind(ED.cont2,ED.indina,ED.categorical,ED.factor)
 
 anyNA(ED.final)
+ED.final=as.data.frame(ED.final)
+write.csv(ED.final,file="~/GitHub/Spr2017-proj5-grp3/data/NAreplaced.csv",row.names = FALSE)
 
-write.csv(ED.final,file="~/GitHub/Spr2017-proj5-grp3/data/NAreplaced.csv")
+save(categorical,continuous, file="featuretype.RData")
 
 ```
 
 
 
-
+Step 2: Combine features with labels
 ```{r}
+
+ED.final<-read.csv("~/GitHub/Spr2017-proj5-grp3/data/NAreplaced.csv")
 label<-read.csv("~/Documents/FFChallenge/train.csv")
 
-label.train<-label[,1:2]
-label.train=na.omit(label.train)
-trainIndex=ED$challengeID %in% label.train$challengeID
-data.train<-ED.final[trainIndex,]
+label<-label[,1:2]
+label=na.omit(label)
+Index=ED.final$challengeID %in% label$challengeID
+
+data.train<-ED.final[Index,]
 data.train<-as.data.frame(data.train)
 
 ```
 
-feature selection
+
+Step 3: feature selection
 ```{r}
 library(Boruta)
 
-model.features = Boruta(data.train[,-1], label.train$gpa, maxRuns = 3000,holdHistory = FALSE)
+data.train[,categorical]=as.data.frame(lapply(data.train[,categorical],factor))
+
+model.features = Boruta(data.train[,-1], label.train$gpa, maxRuns = 500)
 
 results = as.data.frame(model.features$finalDecision)
 which(results!="Rejected")
@@ -218,21 +235,23 @@ Bcodes = rownames(results)[which(results!="Rejected")]
 What are the descriptions of the features (Boruta)?
 ```{r}
 des = data.frame()
-#score = data.frame()
+score = data.frame()
 for (i in 1:length(Bcodes))
 {
   if(Bcodes[i] %in% data.info$code)
   {
     des = rbind(des, as.data.frame(data.info$description[data.info$code==Bcodes[i]]))
-   # score = rbind(score, as.data.frame(imp$meanImp[which(rownames(imp)==Bcodes[i])]))
+   score = rbind(score, as.data.frame(imp$meanImp[which(rownames(imp)==Bcodes[i])]))
 
   }
+
 }
+
 decision = as.data.frame(model.features$finalDecision[model.features$finalDecision!="Rejected"])
 
-Bdf = cbind(Bcodes, des, decision)
-colnames(Bdf) = c("Codes", "Description", "Decision")
-write.csv(Bdf, "../data/codes_description_importance_less_na.csv")
+Bdf = cbind(Bcodes, des, decision,score)
+colnames(Bdf) = c("Codes", "Description", "Decision","Score")
+write.csv(Bdf, "../data/features.csv")
 ```
 
 
