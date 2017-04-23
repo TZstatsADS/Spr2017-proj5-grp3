@@ -8,6 +8,9 @@ output: html_notebook
 Step 0: load the raw data, load the age 9 features, extract age 9 data
 ```{r}
 library(data.table)
+library(stringr)
+library(dmm)
+library(Hmisc)
 
 load("~/GitHub/Spr2017-proj5-grp3/data/background.RData")
 #raw=read.csv("~/Documents/FFChallenge/background.csv",header=TRUE)
@@ -41,49 +44,144 @@ extract.data<-cbind(challengeID=background[,1],extract.data)
 Step 1: solving missing data problem
 ```{r}
 
-#remove columns with all NA, -9, -6, -3 values
+#remove columns with missing values more than 80%
 ED<-as.data.table(extract.data)
+ED=ED[,which(unlist(lapply(ED, function(x)!(sum(x %in% c("-9","-8","-7","-6","-5","-3",NA,""))/nrow(ED)>=0.8)))),with=F]
 
-ED=ED[,which(unlist(lapply(ED, function(x)!(all(x %in% c("-9","-8","-7","-6","-5","-3",NA)))))),with=F]
+#calculate the unique levels of data to split into categorical data and continuous data
+ED.unique=apply(ED, 2, function(x) uniqueN(x[! x %in% c("-9","-8","-7","-6","-5","-3",NA,"")]))
 
-#remove rows with all NA values
-#didn't remove any
-#ED=ED[apply(ED[,-1],1, function(x){!(all(x %in% c("-9","-6","-3",NA)))}),]
+table(ED.unique)
 
 #change from list to data frame
 ED1=do.call(cbind, lapply(ED, data.frame, stringsAsFactors=FALSE))
 row.names(ED1)=row.names(ED)
 colnames(ED1)=colnames(ED)
 
-#calculate the unique levels of data to split into categorical data and continuous data
-ED.unique=apply(ED1, 2, function(x) uniqueN(x[! x %in% c("-9","-8","-7","-6","-5","-3",NA)]))
-
-table(ED.unique)
 
 #split the data
-ED.categorical=ED1[,ED.unique<=15]
-ED.continuous=ED1[,ED.unique>15]
+ED.categorical=ED1[,ED.unique<=10]
+ED.continuous=ED1[,ED.unique>10]
 
 #replace NA in categorical data wth -3
 ED.categorical[is.na(ED.categorical)==TRUE]<-"-3"
 anyNA(ED.categorical)
 
+#change from list to data frame
+ED.categorical=lapply(ED.categorical,factor)
+ED.categorical=as.data.frame(ED.categorical)
+```
+
+Factor data manual cleaning
+```{r}
+#deal with continuous data
+#part of data is factor
+ED.factor=ED.continuous[,which(unlist(lapply(ED.continuous, is.factor)))]
+data.info$description[data.info$code %in% colnames(ED.factor)]
+
+#manually clean these data
+ED.factor[ED.factor==""]<-NA
+
+t1=strsplit(as.character(ED.factor$hv5_ppvtae),"-")
+t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
+ED.factor$hv5_ppvtae=t2
+hv5_ppvtae_isna=numeric(length=nrow(ED.factor))
+hv5_ppvtae_isna[is.na(ED.factor$hv5_ppvtae)]=1
+ED.factor=cbind(ED.factor,hv5_ppvtae_isna)
+
+
+t1=strsplit(as.character(ED.factor$hv5_wj9ae),"-")
+t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
+ED.factor$hv5_wj9ae=t2
+hv5_wj9ae_isna=numeric(length=nrow(ED.factor))
+hv5_wj9ae_isna[is.na(ED.factor$hv5_wj9ae)]=1
+ED.factor=cbind(ED.factor,hv5_wj9ae_isna)
+
+
+t1=strsplit(as.character(ED.factor$hv5_wj10ae),"-")
+t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
+ED.factor$hv5_wj10ae=t2
+hv5_wj10ae_isna=numeric(length=nrow(ED.factor))
+hv5_wj10ae_isna[is.na(ED.factor$hv5_wj10ae)]=1
+ED.factor=cbind(ED.factor,hv5_wj10ae_isna)
+
+
+hv5_ppvtpr_isna=numeric(length=nrow(ED.factor))
+hv5_ppvtpr_isna[ED.factor$hv5_ppvtpr=="Other"]=2
+hv5_ppvtpr_isna[is.na(ED.factor$hv5_ppvtpr)]=1
+ED.factor$hv5_ppvtpr[ED.factor$hv5_ppvtpr=="Other"]=NA
+ED.factor$hv5_ppvtpr=unfactor(ED.factor$hv5_ppvtpr)
+ED.factor=cbind(ED.factor,hv5_ppvtpr_isna)
+
+
+hv5_wj9pr_isna=numeric(length=nrow(ED.factor))
+hv5_wj9pr_isna[ED.factor$hv5_wj9pr=="Other"]=2
+
+hv5_wj9pr_isna[is.na(ED.factor$hv5_wj9pr)]=1
+ED.factor$hv5_wj9pr[ED.factor$hv5_wj9pr=="Other"]=NA
+ED.factor$hv5_wj9pr=unfactor(ED.factor$hv5_wj9pr)
+ED.factor=cbind(ED.factor,hv5_wj9pr_isna)
+
+hv5_wj10pr_isna=numeric(length=nrow(ED.factor))
+hv5_wj10pr_isna[ED.factor$hv5_wj10pr=="Other"]=2
+hv5_wj10pr_isna[ED.factor$hv5_wj10pr=="<0.1"]=3
+hv5_wj10pr_isna[is.na(ED.factor$hv5_wj10pr)]=1
+ED.factor$hv5_wj10pr[ED.factor$hv5_wj10pr=="Other"]=NA
+ED.factor$hv5_wj10pr=unfactor(ED.factor$hv5_wj10pr)
+ED.factor=cbind(ED.factor,hv5_wj10pr_isna)
+ED.factor$hv5_wj10pr[hv5_wj10pr_isna==3]<-0.1
+
+hv5_dsae_isna=numeric(length=nrow(ED.factor))
+hv5_dsae_isna[ED.factor$hv5_dsae==">16:10"]=2
+hv5_dsae_isna[ED.factor$hv5_dsae=="<6:2"]=3
+hv5_dsae_isna[is.na(ED.factor$hv5_dsae)]=1
+
+t1=str_replace(as.character(ED.factor$hv5_dsae), c("<",">"), "")
+t1=strsplit(t1,":")
+t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
+ED.factor$hv5_dsae=t2
+ED.factor=cbind(ED.factor,hv5_dsae_isna)
+
+ED.factor[,grep("*isna",colnames(ED.factor),value=TRUE)]=as.data.frame(lapply(ED.factor[,grep("*isna",colnames(ED.factor),value=TRUE)],factor))
+
+for (i in colnames(ED.factor)){
+  ED.factor[,i]=impute(ED.factor[,i],fun=median)
+}
+
+```
+
+
+continuous data cleaning
+```{r}
+#normal continuous data
+ED.cont2=ED.continuous[,!colnames(ED.continuous) %in% colnames(ED.factor)]
+
 #add a binary indicator to indicate if NA
-ED.indina=apply(ED.continuous,c(1,2), function(x) 
-  if(any(x %in% c("-9","-8","-7","-6","-5","-3","-2","-1",NA))) {x}else{0} )
+ED.indina=apply(ED.cont2,c(1,2), function(x) 
+  if(any(x %in% c("-14","-10","-9","-8","-7","-6","-5","-3","-2","-1",NA,""))) {x}else{0} )
 
 ED.indina[is.na(ED.indina)]="-3"
 ED.indina=ED.indina[,colSums(ED.indina!=0)>0]
 ED.indina=as.data.frame(ED.indina)
 colnames(ED.indina)<-paste0(colnames(ED.indina),"_isna")
+ED.indina=as.data.frame(lapply(ED.indina,factor))
 
-ED.continuous[is.na(ED.continuous)]=0
-#replace NA in continuous data with median (actually can replace with any number)
+ED.cont2[ED.cont2=="-9"|ED.cont2=="-6"]<-NA
+ED.cont2[ED.cont2=="-8"|ED.cont2=="-7"]<-NA
+ED.cont2[ED.cont2=="-5"|ED.cont2=="-3"]<-NA
+ED.cont2[ED.cont2=="-2"|ED.cont2=="-1"]<-NA
+ED.cont2[ED.cont2=="-14"|ED.cont2=="-10"]<-NA
+ED.cont2[ED.cont2==""]<-NA
 
-anyNA(ED.continuous)
+#replace NA in continuous data with median 
+for(i in colnames(ED.cont2)){
+  ED.cont2[,i]=impute(ED.cont2[,i],fun=median)
+}
+
+anyNA(ED.cont2)
 
 #combine the data
-ED.final<-cbind(challengeID=ED.continuous$challengeID,ED.categorical,ED.continuous[,-1],ED.indina)
+ED.final<-cbind(ED.cont2,ED.indina,ED.categorical,ED.factor)
 
 anyNA(ED.final)
 
@@ -111,7 +209,6 @@ library(Boruta)
 
 model.features = Boruta(data.train[,-1], label.train$gpa, maxRuns = 3000,holdHistory = FALSE)
 
-
 results = as.data.frame(model.features$finalDecision)
 which(results!="Rejected")
 Bcodes = rownames(results)[which(results!="Rejected")]
@@ -138,29 +235,58 @@ colnames(Bdf) = c("Codes", "Description", "Decision")
 write.csv(Bdf, "../data/codes_description_importance_less_na.csv")
 ```
 
+
+```{r}
+Bdf=read.csv("../data/codes_description_importance_less_na.csv")
+Bcodes=Bdf$Codes
+data.filtered= data.train[,Bcodes]
+
+data.unique=apply(data.filtered, 2, function(x) sum(x %in% c("-9","-8","-7","-6","-5","-3"))/nrow(data.filtered))
+
+
+
+data.categorical=data.filtered[,Bcodes %in% colnames(ED.categorical)]
+data.continuous=data.filtered[,Bcodes %in% colnames(ED.continuous)]
+```
+
+
 ```{r}
 library(e1071)
 library(tree)
 library(caret)
+library(rpart)
 
 
 #set.seed (1)
-i.train = sample(1:nrow(data.train), nrow(data.train)*0.9)
-dtrain=data.train[i.train,]
-dtest=data.train[-i.train,]
+i.train = sample(1:nrow(data.filtered), nrow(data.filtered)*0.9)
+dtrain=data.filtered[i.train,]
+dtest=data.filtered[-i.train,]
 ltrain=label.train$gpa[i.train]
+ltest=label.train$gpa[-i.train]
 
-dt=cbind(ltrain,dtrain[,-1])
+dt=cbind(ltrain,dtrain)
 dt=as.data.frame(dt)
 
-tree.ff=tree(ltrain~.,dtrain)
+tree.ff=rpart(ltrain~.,dt,method="anova")
 
-cv.d <- cv.tree(tree.boston,FUN = prune.misclass)
-prune.d <- prune.misclass(tree.boston,best = 7)
-tree.pred <- predict(prune.d,subset(dtest,select=-y), type = "class")
-error <- mean(tree.pred != dtest$y)
+printcp(tree.ff)
+prune(tree.ff,cp= tree.ff$cptable[which.min(tree.ff$cptable[,"xerror"]),"CP"])
+tree.predict=predict(tree.ff,newdata = dtest)
+
+error <- sum(tree.predict-ltest)^2/length(ltest)
+
+
+cbind(tree.predict,ltest)
 ```
 
+
+Random Forest
+```{r}
+source("~/GitHub/spr2017-proj3-group7/lib/train.R")
+
+model.best<-Train(data.filtered,label.train$gpa)
+model.best$errors
+```
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
