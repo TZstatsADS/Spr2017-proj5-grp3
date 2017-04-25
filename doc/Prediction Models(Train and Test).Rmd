@@ -1,0 +1,181 @@
+---
+title: "Prediction Models"
+author: "Jingwen Yin jy2786"
+date: "April 24, 2017"
+output: pdf_document
+---
+
+```{r}
+setwd("../data")
+data.filtered <- read.csv('NAreplaced.csv') #4242 1388
+select <- read.csv('features.csv')
+data.filtered <- data.filtered[,select$Codes] # 4242*64
+
+label <- read.csv('train.csv')
+label<-na.omit(label)
+Index<-data.filtered$challengeID %in% label$challengeID
+
+data.train<-data.filtered[Index,]
+data.train<-as.data.frame(data.train)
+data.train<-cbind(label$gpa, data.train)
+colnames(data.train)[1]<-"gpa"
+
+# create training and test data set
+set.seed(123)
+train.index <- sample(1:nrow(data.train),800,replace = F)
+train <- data.train[train.index,] #800*64
+test <- data.train[-train.index,] #214*64
+```
+```{r}
+Error<-function(pred){
+  return(mean((test$gpa-pred)^2))
+}
+```
+
+
+# Model 1: Multiple linear regression
+```{r}
+# train model
+lin.reg <- lm(gpa~.,data = train)
+# test error
+test.pred.lin <- predict(lin.reg,test)
+linErr<-Error(test.pred.lin)
+linErr
+```
+
+
+
+# Model 2: Trees
+```{r, message=FALSE}
+library(rpart)
+library(party)
+library(randomForest)
+
+# train model
+# rpart function applied to a numeric variable => regression tree
+rt <- rpart(gpa~., data=train, method = "anova")
+test.pred.rtree <- predict(rt,test) 
+
+# test error
+treeErr<-Error(test.pred.rtree) # 0.3871372
+
+# check cross-validation results
+printcp(rt) #Root node error:343.7/800 = 0.42962
+
+# get the optimal
+min.xerror <- rt$cptable[which.min(rt$cptable[,"xerror"]),"CP"]
+min.xerror #0.01629374
+
+# use it to prune the tree
+rt.pruned <- prune(rt,cp = min.xerror) 
+
+# plot the pruned tree
+fancyRpartPlot(rt.pruned)
+
+# evaluate the new pruned tree on the test set
+test.pred.rtree.p <- predict(rt.pruned,test)
+pruneErr<-Error(test.pred.rtree.p) # 0.3644836
+
+# Conditional inference trees via party
+ct<-ctree(gpa~., data = train)
+test.ct<-predict(ct, test)
+ctErr<-Error(test.ct) # 0.3870917
+
+# Random Forest
+rf <- randomForest(gpa~., data = train)
+test.rf<-predict(rf, test)
+rfErr<-Error(test.rf) # 0.3385959
+```
+
+
+
+# Model 3: gamboostLSS
+```{r, message=FALSE}
+library('gamboostLSS')
+
+# train model
+lmLSS <- glmboostLSS(gpa~., data = train)
+test.pred.gam<- predict(lmLSS,test)
+gamErr<-Error(test.pred.gam[[1]]) # 0.336005
+```
+
+
+# Model 4:SVM
+```{r, message=FALSE}
+# SVM
+library(e1071)
+svm_fit<-svm(gpa~.,data=train)
+svm_predictions<-predict(svm_fit,newdata=test)
+svmErr<-Error(svm_predictions) # 0.3408248
+```
+
+# Ensemble--Bagging
+```{r, message=FALSE}
+# Linear Bagging
+library(foreach)
+length_divisor<-6
+iterations<-5000
+predictions<-foreach(m=1:iterations,.combine=cbind) %do% {
+training_positions <- sample(nrow(train), size=floor((nrow(train)/length_divisor)))
+train_pos<-1:nrow(train) %in% training_positions
+lm_fit<-lm(gpa~.,data=train[train_pos,])
+predict(lm_fit,newdata=test)
+}
+lm_predictions<-rowMeans(predictions)
+lmbagErr<-Error(lm_predictions) # 0.3571328
+
+#Ensemble Linear Regression and Random Forest
+predictions<-(lm_predictions+test.rf)/2
+lmrfErr<-Error(predictions) # 0.3396056
+```
+```{r}
+# SVM Bagging
+predictions<-foreach(m=1:iterations,.combine=cbind) %do% {
+training_positions <- sample(nrow(train), size=floor((nrow(train)/length_divisor)))
+train_pos<-1:nrow(train) %in% training_positions
+svm_fit<-svm(gpa~.,data=train[train_pos,])
+predict(svm_fit,newdata=test)
+}
+Error(predictions) # 0.3750012
+
+# Ensemble SVM and Random Forest
+predictions<-(svm_predictions+test.rf)/2
+svmrfErr<-Error(predictions) # 0.3339535
+```
+
+
+# Ensemble--Boosting
+```{r, message=FALSE}
+# Load libraries
+library(mlbench)
+library(caret)
+library(caretEnsemble)
+# Example of Boosting Algorithms
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+seed <- 7
+metric <- "RMSE"
+# Stochastic Gradient Boosting
+set.seed(seed)
+fit.gbm <- train(gpa~., data=train, method="gbm", metric=metric, trControl=control, verbose=FALSE)
+gbm_prediction<-predict(fit.gbm, test)
+gbmErr<-Error(gbm_prediction) # 0.3364468
+fit.rf<-train(gpa~., data=train, method="rf", metric=metric, trControl=control, verbose=FALSE)
+rf_prediction<-predict(fit.rf, test)
+rfErr<-Error(rf_prediction) #  0.3392138
+# summarize results
+boosting_results <- resamples(list(rf=fit.rf, gbm=fit.gbm))
+summary(boosting_results)
+dotplot(boosting_results)
+```
+
+
+# Model Comparision
+```{r}
+# Create a data frame with the error metrics for each method
+accuracy <- data.frame(Method = c("Linear Regression","Full tree","Pruned tree","Random Forest", "Conditional inference trees", 'gamboostLSS', "Gradient Boosting", "Support Vector Machine", "LM+RF", "SVM+RF"),
+Test.Error = c(linErr,treeErr,pruneErr, rfErr, ctErr, gamErr, gbmErr, svmErr, lmrfErr, svmrfErr))
+
+# Round the values and print the table
+accuracy$Test.Error <- round(accuracy$Test.Error,2)
+accuracy
+```
