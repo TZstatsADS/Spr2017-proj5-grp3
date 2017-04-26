@@ -1,0 +1,79 @@
+"","Codes","Description","Decision","Importance Score"
+"1","hv5_ppvtae","PPVT age equivalency","Confirmed",5.680885091574
+"2","hv5_ppvtpr","PPVT percentile rank","Confirmed",6.49160341005409
+"3","hv5_wj9pr","Woodcock Johnson Test 9 percentile rank","Confirmed",5.95876918174592
+"4","hv5_wj9ae","Woodcock Johnson Test 9 age equivalency","Confirmed",4.50106838922126
+"5","hv5_wj10pr","Woodcock Johnson Test 10 percentile rank","Confirmed",7.91505737854213
+"6","hv5_wj10ae","Woodcock Johnson Test 10 age equivalency","Confirmed",6.34696907597647
+"7","k5g1d","G1D. I try to do my best on all my work","Confirmed",2.99534646506143
+"8","k5g2c","G2C. I worry about taking tests","Confirmed",3.65516786025445
+"9","k5g2d","G2D. It's hard for me to pay attention","Tentative",2.60029101990585
+"10","k5g2h","G2H. It's hard for me to finish my schoolwork","Confirmed",3.28066634674161
+"11","k5g2i","G2I. I worry about doing well in school","Confirmed",3.11346879615166
+"12","k5g2m","G2M. I get in trouble for talking and disturbing others","Confirmed",2.9463997309497
+"13","m5b22b","B22B. How often father buys toys for child","Confirmed",2.79018838200247
+"14","m5b22g","B22G. How often father buys entertainment items for child","Tentative",2.5371952752452
+"15","f5a4","A4. Relationship with child's biological mother now","Confirmed",2.77069478936644
+"16","f5e6a","E6A. Father could count on someone to co-sign for a bank loan for $5000","Tentative",2.61925129958884
+"17","f5g35","G35. Age when you had sexual intercourse for the first time","Confirmed",3.70097218666682
+"18","f5i13","i13. how much you earn in that job, before taxes","Confirmed",4.12871433075092
+"19","f5j1","J1. Total household income before taxes/deductions in past 12 months","Confirmed",4.05112857300692
+"20","f5j4a","J4A. Name on bank account","Confirmed",3.86187599789955
+"21","f5j5a","J5A. Name on credit card","Confirmed",3.1909547858555
+"22","f5j5b","J5B. Way money is handled as a couple","Confirmed",2.96878812388759
+"23","f5j6b1","J6B1. Amount owed on your vehicle","Confirmed",2.92669808930867
+"24","f5j6c","J6C. Value of vehicle if sold","Confirmed",5.20352872312143
+"25","f5j6f","J6F. You or your wife/partner have other loans","Confirmed",3.46717301274249
+"26","f5k7","K7. Number of child's close friends you know by sight and first and last name","Confirmed",4.62687121717301
+"27","f5k14b","K14B. In past month, you played sports or did outdoor activities with child","Tentative",2.59560969516954
+"28","p5i31h","I31H. Frequency father talked about day with child in past month","Confirmed",2.79894769060105
+"29","p5i34","I34. Number of child's close friends father knows by sight, first and last name","Confirmed",2.816955353957
+"30","p5j4b","J4B. Child receives free or reduced price lunch","Confirmed",3.26488977430927
+"31","p5q3bg","Q3BG. Child does poor school work","Confirmed",2.78593447122157
+"32","p5q3bt","Q3BT. Child shows off or clowns","Confirmed",3.37050825926199
+"33","p5q3bw","Q3BW. Child is inattentive or easily distracted","Confirmed",3.6210256173086
+"34","hv5_ppvtss","PPVT standard score","Confirmed",7.13233455320591
+"35","hv5_wj9ss","Woodcock Johnson Test 9 standard score","Confirmed",5.73530615763522
+"36","hv5_wj10ss","Woodcock Johnson Test 10 standard score","Confirmed",8.24681015897264
+"37","hv5_wj9raw","Woodcock Johnson Test 9 raw score","Confirmed",4.99097172608256
+"38","t5b1d","B1D. Child says nice things about self/others when appropriate","Confirmed",3.70820874097635
+"39","t5b1f","B1F. Child uses free time in an acceptable way","Confirmed",3.46601196634365
+"40","t5b1g","B1G. Child finishes class assignments with time limits","Confirmed",3.54762497654822
+"41","t5b1l","B1L. Child uses time appropriately while waiting for help","Confirmed",3.76563370123103
+"42","t5b1m","B1M. Child produces correct schoolwork","Confirmed",4.08676529923514
+"43","t5b1o","B1O. Child gives compliments to peers","Confirmed",3.08328333091702
+"44","t5b1p","B1P. Child follows your directions","Confirmed",3.46992146491487
+"45","t5b1u","B1U. Child ignores peer distractions when doing class work","Confirmed",3.78070341121253
+"46","t5b1v","B1V. Child keeps desk clean and neat without being reminded","Confirmed",3.70088787001641
+"47","t5b1w","B1W. Child attends to your instructions","Confirmed",4.73379377855894
+"48","t5b1x","B1X. Child easily makes transition from one activity to another","Confirmed",2.84340651503913
+"49","t5b1ac","B1AC. Child is sensitive to the feelings of others","Confirmed",2.86857671282384
+"50","t5b2a","B2A. Child pays attention well","Confirmed",3.23130285320732
+"51","t5b2b","B2B. Child persists in completing tasks","Confirmed",4.52101803572377
+"52","t5b2c","B2C. Child works independently","Confirmed",3.6226463782059
+"53","t5b2d","B2D. Child easily adapts to change in routine","Tentative",2.66682387132857
+"54","t5b2e","B2E. Child keeps belongings organized","Confirmed",3.44555731045907
+"55","t5b2f","B2F. Child shows eagerness to learn new things","Confirmed",3.18473166274336
+"56","t5b2g","B2G. Child follows classroom rules","Confirmed",2.97690946329631
+"57","t5b4a","B4A. Child is inattentive, easily distracted","Confirmed",3.24875915257221
+"58","t5b4i","B4I. Child cannot remain still","Confirmed",3.30708833764339
+"59","t5b4k","B4K. Child leaves seat when remaining seated is expected","Confirmed",3.17625196157243
+"60","t5b4n","B4N. Child has a short attention span","Confirmed",3.14311422441231
+"61","t5b4r","B4R. Child lacks interest in schoolwork","Confirmed",4.27123929327144
+"62","t5b4s","B4S. Child has distractibility or attention span problem","Confirmed",3.86961838804375
+"63","t5b4y","B4Y. Child fails to finish things he or she starts","Confirmed",3.8360920326363
+"64","t5b4z","B4Z. Child does not follow through on instructions and fails to finish homework","Confirmed",3.29926109955795
+"65","t5c13a","C13A. Child's language and literacy skills","Confirmed",4.11458168941745
+"66","t5c13b","C13B. Child's science and social studies","Confirmed",5.54916758848709
+"67","t5c13c","c13C. Child's mathematical skills","Confirmed",5.64874520778281
+"68","t5c16","C16. Frequency child works to best of her/his ability","Confirmed",2.96409924296292
+"69","cf5age","Constructed - Father's age (years)","Confirmed",3.33333335421418
+"70","cf5edu","Father's education: year 9","Confirmed",5.28500135869018
+"71","cm5hhinc","Constructed - Mother's Household income (with imputed values)","Confirmed",4.79869219522434
+"72","cf5hhinc","Constructed - Father's Household income (with imputed values)","Confirmed",5.55717759772835
+"73","cf5hhincb","Constructed - Household income mother report for married/cohab if available (wit","Confirmed",6.55839176562022
+"74","cm5povco","Constructed - Mother's household income/poverty threshold at 9-year","Confirmed",4.38288162456449
+"75","cf5povco","Constructed - father's household income/poverty threshold at 9-year","Confirmed",5.68600692893179
+"76","cf5povcob","Constructed - father's household income/poverty threshold at 9-year, mother repo","Confirmed",6.31747004268502
+"77","cf5povca","Constructed - Father's poverty category at 9-year","Confirmed",3.50800936664468
+"78","cf5povcab","Constructed - Father's poverty category at 9-year, mother reports for married/co","Confirmed",3.39100754407345
