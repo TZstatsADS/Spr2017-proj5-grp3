@@ -33,12 +33,14 @@ rm(background, fea, temp, x, i, index, y)
 
 
 
-RF???
+Train a RF model
 ```{r}
 library(randomForest)
 sam = sample(nrow(dat), floor(nrow(dat)*0.8))
 train = dat[sam, ]
 test = dat[-sam, ]
+
+# these two lines will use all data to train, and this model will be used to test on the 4242 observations.
 test = dat
 train = dat
 
@@ -57,7 +59,7 @@ rf_correct = mean(abs(rf_results[,1]-rf_results[,2])<0.15)
 
 
 
-
+########### optional; reduces accuracy ################
 # round to nearest category
 lis = c(1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25 ,3.5 ,3.75 ,4)
 for(i in 1:length(rf_pred))
