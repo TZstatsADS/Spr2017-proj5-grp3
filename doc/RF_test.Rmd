@@ -72,6 +72,9 @@ for(i in 1:length(rf_pred))
 ```
 
 
+
+
+I am actually tuning the parameters (mtry and ntree)
 ```{r}
 
 df = data.frame()
