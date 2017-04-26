@@ -1,0 +1,61 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This notebook is for Feature Selection.
+
+
+Step 3: feature selection
+```{r}
+library(Boruta)
+
+ED.final<-read.csv("~/GitHub/Spr2017-proj5-grp3/data/NAreplaced.csv")
+#names(ED.final[,1])="challengeID"
+label<-read.csv("~/Documents/FFChallenge/train.csv")
+
+
+label<-label[,1:2]
+label=na.omit(label)
+Index=ED.final$challengeID %in% label$challengeID
+
+data.train<-ED.final[Index,]
+data.train<-as.data.frame(data.train)
+
+model.features = Boruta(data.train[,-1], label.train$gpa, maxRuns = 500)
+
+results = as.data.frame(model.features$finalDecision)
+which(results!="Rejected")
+Bcodes = rownames(results)[which(results!="Rejected")]
+
+```
+
+
+What are the descriptions of the features (Boruta)?
+```{r}
+des = data.frame()
+#score = data.frame()
+for (i in 1:length(Bcodes))
+{
+  if(Bcodes[i] %in% data.info$code)
+  {
+    des = rbind(des, as.data.frame(data.info$description[data.info$code==Bcodes[i]]))
+   #score = rbind(score, as.data.frame(imp$meanImp[which(rownames(imp)==Bcodes[i])]))
+
+  }
+
+}
+
+decision = as.data.frame(model.features$finalDecision[model.features$finalDecision!="Rejected"])
+
+Bdf = cbind(Bcodes, des, decision)
+colnames(Bdf) = c("Codes", "Description", "Decision")
+
+pred="gpa"
+write.csv(Bdf, paste0("../data/",pred,"features.csv"))
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).

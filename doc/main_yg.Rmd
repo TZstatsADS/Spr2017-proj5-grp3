@@ -1,9 +1,10 @@
 ---
 title: "R Notebook"
+author: Yue Gao
 output: html_notebook
 ---
 
-
+This notebook is for Data Cleaning.
 
 Step 0: load the raw data, load the age 9 features, extract age 9 data
 ```{r, include=FALSE}
@@ -11,16 +12,20 @@ library(data.table)
 library(stringr)
 library(dmm)
 library(Hmisc)
+library(mice)
 
 load("~/GitHub/Spr2017-proj5-grp3/data/background.RData")
+source("~/GitHub/Spr2017-proj5-grp3/lib/helper_data.R")
 #raw=read.csv("~/Documents/FFChallenge/background.csv",header=TRUE)
+
 features<-colnames(background)
 
+#create codebook
 codebooks<-c("child","mom","dad","teacher")
 data.info<-vector()
 
 for (i in codebooks){
-feat.table<-read.csv(paste0("~/GitHub/Spr2017-proj5-grp3/data/ff_",i,"_cb9.csv"),header=FALSE)
+feat.table<-read.csv(paste0("~/GitHub/Spr2017-proj5-grp3/data/codebook/ff_",i,"_cb9.csv"),header=FALSE)
 feat.table<-feat.table[,-1]
 feat.table<-feat.table[-1,]
 feat.table<-cbind(rep(i,nrow(feat.table)),feat.table)
@@ -38,226 +43,64 @@ sum(extract.feature)
 extract.data<-background[,extract.feature]
 extract.data<-cbind(challengeID=background[,1],extract.data)
 
+write.csv(extract.data,file="~/GitHub/Spr2017-proj5-grp3/data/extract_data.csv")
+save(data.info, file="data_info.RData")
 ```
 
 
-Step 1: solving missing data problem
+Step 1: clean data
 ```{r}
-
 #remove columns with missing values more than 80%
-ED<-as.data.table(extract.data)
-ED=ED[,which(unlist(lapply(ED, function(x)!(sum(x %in% c("-9","-8","-7","-6","-5","-3",NA,""))/nrow(ED)>=0.8)))),with=F]
-
-#calculate the unique levels of data to split into categorical data and continuous data
-ED.unique=apply(ED, 2, function(x) uniqueN(x[! x %in% c("-9","-8","-7","-6","-5","-3",NA,"")]))
-
-table(ED.unique)
-
-#change from list to data frame
-ED1=do.call(cbind, lapply(ED, data.frame, stringsAsFactors=FALSE))
-row.names(ED1)=row.names(ED)
-colnames(ED1)=colnames(ED)
-
-
-#split the data
-ED.categorical=ED1[,ED.unique<=10]
-ED.continuous=ED1[,ED.unique>10]
-
-#replace NA in categorical data wth -3
-ED.categorical[is.na(ED.categorical)==TRUE]<-"-3"
-anyNA(ED.categorical)
+extract.data<-read.csv("~/GitHub/Spr2017-proj5-grp3/data/extract_data.csv")
+ED<-divide.data(extract.data)
+ED.categorical=ED[[1]]
+ED.continuous=ED[[2]]
 
 categorical=colnames(ED.categorical)
-#change from list to data frame
-#ED.categorical=lapply(ED.categorical,factor)
-#ED.categorical=as.data.frame(ED.categorical)
-```
 
-Factor data manual cleaning
-```{r}
-#deal with continuous data
-#part of data is factor
-ED.factor=ED.continuous[,which(unlist(lapply(ED.continuous, is.factor)))]
-data.info$description[data.info$code %in% colnames(ED.factor)]
+ED.factor=clean.factor(ED.continuous)
 
-#manually clean these data
-ED.factor[ED.factor==""]<-NA
+ED.continuous=ED.continuous[,!colnames(ED.continuous) %in% colnames(ED.factor)]
+ED.continuous=clean.continuous(ED.continuous)
 
-t1=strsplit(as.character(ED.factor$hv5_ppvtae),"-")
-t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
-ED.factor$hv5_ppvtae=t2
-hv5_ppvtae_isna=numeric(length=nrow(ED.factor))
-hv5_ppvtae_isna[is.na(ED.factor$hv5_ppvtae)]=1
-ED.factor=cbind(ED.factor,hv5_ppvtae_isna)
-
-
-t1=strsplit(as.character(ED.factor$hv5_wj9ae),"-")
-t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
-ED.factor$hv5_wj9ae=t2
-hv5_wj9ae_isna=numeric(length=nrow(ED.factor))
-hv5_wj9ae_isna[is.na(ED.factor$hv5_wj9ae)]=1
-ED.factor=cbind(ED.factor,hv5_wj9ae_isna)
-
-
-t1=strsplit(as.character(ED.factor$hv5_wj10ae),"-")
-t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
-ED.factor$hv5_wj10ae=t2
-hv5_wj10ae_isna=numeric(length=nrow(ED.factor))
-hv5_wj10ae_isna[is.na(ED.factor$hv5_wj10ae)]=1
-ED.factor=cbind(ED.factor,hv5_wj10ae_isna)
-
-
-hv5_ppvtpr_isna=numeric(length=nrow(ED.factor))
-hv5_ppvtpr_isna[ED.factor$hv5_ppvtpr=="Other"]=2
-hv5_ppvtpr_isna[is.na(ED.factor$hv5_ppvtpr)]=1
-ED.factor$hv5_ppvtpr[ED.factor$hv5_ppvtpr=="Other"]=NA
-ED.factor$hv5_ppvtpr=unfactor(ED.factor$hv5_ppvtpr)
-ED.factor=cbind(ED.factor,hv5_ppvtpr_isna)
-
-
-hv5_wj9pr_isna=numeric(length=nrow(ED.factor))
-hv5_wj9pr_isna[ED.factor$hv5_wj9pr=="Other"]=2
-
-hv5_wj9pr_isna[is.na(ED.factor$hv5_wj9pr)]=1
-ED.factor$hv5_wj9pr[ED.factor$hv5_wj9pr=="Other"]=NA
-ED.factor$hv5_wj9pr=unfactor(ED.factor$hv5_wj9pr)
-ED.factor=cbind(ED.factor,hv5_wj9pr_isna)
-
-hv5_wj10pr_isna=numeric(length=nrow(ED.factor))
-hv5_wj10pr_isna[ED.factor$hv5_wj10pr=="Other"]=2
-hv5_wj10pr_isna[ED.factor$hv5_wj10pr=="<0.1"]=3
-hv5_wj10pr_isna[is.na(ED.factor$hv5_wj10pr)]=1
-ED.factor$hv5_wj10pr[ED.factor$hv5_wj10pr=="Other"]=NA
-ED.factor$hv5_wj10pr=unfactor(ED.factor$hv5_wj10pr)
-ED.factor=cbind(ED.factor,hv5_wj10pr_isna)
-ED.factor$hv5_wj10pr[hv5_wj10pr_isna==3]<-0.1
-
-hv5_dsae_isna=numeric(length=nrow(ED.factor))
-hv5_dsae_isna[ED.factor$hv5_dsae==">16:10"]=2
-hv5_dsae_isna[ED.factor$hv5_dsae=="<6:2"]=3
-hv5_dsae_isna[is.na(ED.factor$hv5_dsae)]=1
-
-t1=str_replace(as.character(ED.factor$hv5_dsae), c("<",">"), "")
-t1=strsplit(t1,":")
-t2=do.call(rbind, lapply(t1, function(x) as.integer(x[1])*12+as.integer(x[2])))
-ED.factor$hv5_dsae=t2
-ED.factor=cbind(ED.factor,hv5_dsae_isna)
-
-
-#ED.factor[,grep("*isna",colnames(ED.factor),value=TRUE)]=as.data.frame(lapply(ED.factor[,grep("*isna",colnames(ED.factor),value=TRUE)],factor))
-
-for (i in colnames(ED.factor)){
-  ED.factor[,i]=impute(ED.factor[,i],fun=median)
-}
-
-categorical=c(categorical,colnames(ED.factor[,grep("*isna",colnames(ED.factor))]))
-
-```
-
-
-continuous data cleaning
-```{r}
-#normal continuous data
-ED.cont2=ED.continuous[,!colnames(ED.continuous) %in% colnames(ED.factor)]
-
-#add a binary indicator to indicate if NA
-ED.indina=apply(ED.cont2,c(1,2), function(x) 
-  if(any(x %in% c("-14","-10","-9","-8","-7","-6","-5","-3","-2","-1",NA,""))) {x}else{0} )
-
-ED.indina[is.na(ED.indina)]="-3"
-ED.indina=ED.indina[,colSums(ED.indina!=0)>0]
-ED.indina=as.data.frame(ED.indina)
-colnames(ED.indina)<-paste0(colnames(ED.indina),"_isna")
-
-categorical=c(categorical,colnames(ED.indina))
-#ED.indina=as.data.frame(lapply(ED.indina,factor))
-
-ED.cont2[ED.cont2=="-9"|ED.cont2=="-6"]<-NA
-ED.cont2[ED.cont2=="-8"|ED.cont2=="-7"]<-NA
-ED.cont2[ED.cont2=="-5"|ED.cont2=="-3"]<-NA
-ED.cont2[ED.cont2=="-2"|ED.cont2=="-1"]<-NA
-ED.cont2[ED.cont2=="-14"|ED.cont2=="-10"]<-NA
-ED.cont2[ED.cont2==""]<-NA
-
-#replace NA in continuous data with median 
-for(i in colnames(ED.cont2)){
-  ED.cont2[,i]=impute(ED.cont2[,i],fun=median)
-}
-
-anyNA(ED.cont2)
-
-continuous=c(colnames(ED.cont2),colnames(ED.factor[,1:7]))
-continuous=continuous[-1]
-
+categorical=c(categorical,colnames(ED.factor[,grep("*isna",colnames(ED.factor))]),colnames(ED.continuous[,grep("*isna",colnames(ED.continuous))]))
 #combine the data
-ED.final<-cbind(ED.cont2,ED.indina,ED.categorical,ED.factor)
 
-anyNA(ED.final)
+ED.final<-cbind(ED.continuous,ED.categorical,ED.factor)
+
 ED.final=as.data.frame(ED.final)
-write.csv(ED.final,file="~/GitHub/Spr2017-proj5-grp3/data/NAreplaced.csv",row.names = FALSE)
-
-save(categorical,continuous, file="featuretype.RData")
-
 ```
 
+
+
+Step 2: solving missing data problem
+```{r}
+
+final.mis<-ED.final[,which(unlist(lapply(ED.final, function(x) anyNA(x))))]
+imputed_Data <- mice(final.mis, m=5, maxit = 50, method = 'pmm', seed = 500)
+
+completeData=list()
+
+for (i in 1:5){
+  completeData[[i]]<-cbind.data.frame(challengeID=ED.continuous[,1],complete(imputed_Data,i),ED.categorical)
+  write.csv(completeData[[i]],file=paste0("~/GitHub/Spr2017-proj5-grp3/data/imputed",i,".csv"),row.names = FALSE)
+}
+
+save(categorical, file="categorical.RData")
+
+```
 
 
 Step 2: Combine features with labels
 ```{r}
 
-ED.final<-read.csv("~/GitHub/Spr2017-proj5-grp3/data/NAreplaced.csv")
-label<-read.csv("~/Documents/FFChallenge/train.csv")
-
-label<-label[,1:2]
-label=na.omit(label)
-Index=ED.final$challengeID %in% label$challengeID
-
-data.train<-ED.final[Index,]
-data.train<-as.data.frame(data.train)
-
-```
-
-
-Step 3: feature selection
-```{r}
-library(Boruta)
-
-data.train[,categorical]=as.data.frame(lapply(data.train[,categorical],factor))
-
-model.features = Boruta(data.train[,-1], label.train$gpa, maxRuns = 500)
-
-results = as.data.frame(model.features$finalDecision)
-which(results!="Rejected")
-Bcodes = rownames(results)[which(results!="Rejected")]
 
 
 ```
 
 
-What are the descriptions of the features (Boruta)?
 ```{r}
-des = data.frame()
-#score = data.frame()
-for (i in 1:length(Bcodes))
-{
-  if(Bcodes[i] %in% data.info$code)
-  {
-    des = rbind(des, as.data.frame(data.info$description[data.info$code==Bcodes[i]]))
-   #score = rbind(score, as.data.frame(imp$meanImp[which(rownames(imp)==Bcodes[i])]))
 
-  }
-
-}
-
-decision = as.data.frame(model.features$finalDecision[model.features$finalDecision!="Rejected"])
-
-Bdf = cbind(Bcodes, des, decision)
-colnames(Bdf) = c("Codes", "Description", "Decision")
-write.csv(Bdf, "../data/features.csv")
-```
-
-
-```{r}
 Bdf=read.csv("../data/features.csv")
 Bcodes=Bdf$Codes
 data.filtered= data.train[,Bcodes]
@@ -276,19 +119,19 @@ library(rpart)
 i.train = sample(1:nrow(data.filtered), nrow(data.filtered)*0.9)
 dtrain=data.filtered[i.train,]
 dtest=data.filtered[-i.train,]
-ltrain=label.train$gpa[i.train]
-ltest=label.train$gpa[-i.train]
+ltrain=label$gpa[i.train]
+ltest=label$gpa[-i.train]
 
 dt=cbind(ltrain,dtrain)
 dt=as.data.frame(dt)
 
 tree.ff=rpart(ltrain~.,dt,method="anova")
-
-best.tree=cv.tree(tree.ff,FUN=prune.tree,K=10)
+min.xerror <- tree.ff$cptable[which.min(tree.ff$cptable[,"xerror"]),"CP"]
+min.xerror #0.01629374
+best.tree=prune(tree.ff,cp = min.xerror) 
 tree.predict=predict(tree.ff,newdata = dtest)
 
-
-error <- sum(tree.predict-ltest)^2/length(ltest)
+error <- mean((tree.predict-ltest)^2)
 
 cbind(tree.predict,ltest)
 ```
@@ -301,6 +144,4 @@ source("~/GitHub/spr2017-proj3-group7/lib/train.R")
 model.best<-Train(data.filtered,factor(label.train$gpa))
 model.best$errors
 ```
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
