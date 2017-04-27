@@ -3,7 +3,7 @@
 Term: Spring 2017
 
 + Team #3
-+ Projec title: Fragile Families Challenge
++ Projec title: Fragile Families Challenge Prediction
 + Team members
 	+ Yue Gao
 	+ Mengchen Li
