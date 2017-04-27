@@ -1,16 +1,27 @@
 ---
-title: "Ensemble Model"
-author: "Jingwen Yin"
+title: "Prediction Models"
+author: "Jingwen Yin jy2786"
+date: "April 24, 2017"
 output: pdf_document
 ---
+```{r, warning=FALSE, message=FALSE}
+library(rpart)
+library(party)
+library(randomForest)
+library(gamboostLSS)
+library(e1071)
+library(foreach)
+library(mlbench)
+library(caret)
+```
 
-```{r}
-setwd("../data")
-data.filtered <- read.csv('NAreplaced.csv') #4242 1388
-select <- read.csv('features.csv')
+# GPA
+```{r, message=FALSE, warning=FALSE}
+data.filtered <- read.csv('../data/NAreplaced.csv') #4242 1388
+select <- read.csv('../data/Updated_Features/gpa_features.csv')
 data.filtered <- data.filtered[,select$Codes] # 4242*64
 
-label <- read.csv('train.csv')
+label <- read.csv('../data/train.csv')
 label<-na.omit(label)
 Index<-data.filtered$challengeID %in% label$challengeID
 
@@ -19,166 +30,100 @@ data.train<-as.data.frame(data.train)
 data.train<-cbind(label$gpa, data.train)
 colnames(data.train)[1]<-"gpa"
 
-filled<-matrix(0, 4242, 5)
-```
-
-
-
-# Model 1: Linear regression
-```{r}
-lin.reg <- lm(gpa~.,data = data.train)
-pred.lin<-predict(lin.reg, data.filtered)
-result<-data.frame(data.filtered$challengeID,pred.lin,filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.40233
-```
-
-
-# Model 2: Trees
-```{r}
-library(rpart)
-library(rattle)
-library(rpart.plot)
-library(party)
-library(randomForest)
-
-# rpart function applied to a numeric variable => regression tree
-rt <- rpart(gpa~., data=data.train, method = "anova")
-pred.rt <- predict(rt,data.filtered) 
-result<-data.frame(data.filtered$challengeID,pred.rt,filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.38564
-
-# get the optimal
-min.xerror <- rt$cptable[which.min(rt$cptable[,"xerror"]),"CP"]
-
-# use it to prune the tree
-rt.pruned <- prune(rt,cp = min.xerror) 
-
-# evaluate the new pruned tree 
-pred.pruned <- predict(rt.pruned,data.filtered)
-result<-data.frame(data.filtered$challengeID,pred.pruned,filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.38556
-
-# Conditional inference trees via party
-ct<-ctree(gpa~., data = data.train)
-pred.ct <- predict(ct,data.filtered)
-result<-data.frame(data.filtered$challengeID,pred.ct,filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.38917
-
-# Random Forest
-rf <- randomForest(gpa~., data = data.train)
-pred.rf<-predict(rf, data.filtered)
-result<-data.frame(data.filtered$challengeID,pred.rf, filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.37494
-```
-
-
-# Model 3: gamboostLSS
-```{r}
-library('gamboostLSS')
-lmLSS <- glmboostLSS(gpa~., data = data.train)
-pred.lmLSS<-predict(lmLSS, data.filtered)
-result<-data.frame(data.filtered$challengeID,pred.lmLSS[[1]], filled)
-colnames(result)<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.39076
-```
-
-
-# Model 4: SVM
-```{r}
-library(e1071)
-svm_fit<-svm(gpa~.,data=data.train)
-svm_predictions<-predict(svm_fit,newdata=data.filtered)
-result<-data.frame(data.filtered$challengeID,svm_predictions,filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.3944
-```
-
-# Ensemble--Bagging
-```{r}
-# Linear Bagging
-library(foreach)
-length_divisor<-6
-iterations<-5000
-predictions<-foreach(m=1:iterations,.combine=cbind) %do% {
-training_positions <- sample(nrow(data.train), size=floor((nrow(data.train)/length_divisor)))
-train_pos<-1:nrow(data.train) %in% training_positions
-lm_fit<-lm(gpa~.,data=data.train[train_pos,])
-predict(lm_fit,newdata=data.filtered)
-}
-lm_predictions<-rowMeans(predictions)
-result<-data.frame(data.filtered$challengeID,lm_predictions, filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.4044
-
-#Ensemble Linear Regression and Random Forest
-predictions<-(lm_predictions+pred.rf)/2
-result<-data.frame(data.filtered$challengeID,predictions, filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.37888
-```
-```{r}
-# SVM Bagging
-predictions<-foreach(m=1:iterations,.combine=cbind) %do% {
-training_positions <- sample(nrow(data.train), size=floor((nrow(data.train)/length_divisor)))
-train_pos<-1:nrow(data.train) %in% training_positions
-svm_fit<-svm(gpa~.,data=data.train[train_pos,])
-predict(svm_fit,newdata=data.filtered)
-}
-svm_predictions<-rowMeans(predictions)
-result<-data.frame(data.filtered$challengeID,svm_predictions,filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-
-# Ensemble SVM and Random Forest
-predictions<-(svm_predictions+pred.rf)/2
-result<-data.frame(data.filtered$challengeID,predictions, filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.37694
-```
-
-# Ensemble--Boosting
-```{r}
-# Load libraries
-library(mlbench)
-library(caret)
-library(caretEnsemble)
-# Example of Boosting Algorithms
 control <- trainControl(method="repeatedcv", number=10, repeats=3)
 seed <- 7
 metric <- "RMSE"
 # Stochastic Gradient Boosting
 set.seed(seed)
 fit.gbm <- train(gpa~., data=data.train, method="gbm", metric=metric, trControl=control, verbose=FALSE)
-gbm_prediction<-predict(fit.gbm, data.filtered)
-result<-data.frame(data.filtered$challengeID,gbm_prediction, filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.37291
-
-fit.rf<-train(gpa~., data=data.train, method="rf", metric=metric, trControl=control, verbose=FALSE)
-rf_prediction<-predict(fit.rf, data.filtered)
-result<-data.frame(data.filtered$challengeID,rf_prediction, filled)
-colnames(result)[1:2]<-c("challengeID", "gpa")
-write.csv(result, "prediction.csv", row.names = FALSE)
-# GPA: 0.3743
+gpa_prediction<-predict(fit.gbm, data.filtered)
 ```
 
+# Grit
+```{r, message=FALSE, warning=FALSE}
+data.filtered <- read.csv('../data/NAreplaced.csv') 
+select <- read.csv('../data/Updated_Features/grit_features.csv')
+data.filtered <- data.filtered[,select$Codes] 
 
+data.train<-data.filtered[Index,]
+data.train<-as.data.frame(data.train)
+data.train<-cbind(label$grit, data.train)
+colnames(data.train)[1]<-"grit"
 
+# gamboostLSS
+lmLSS <- glmboostLSS(grit~., data=data.train)
+grit_prediction<- predict(lmLSS,data.filtered)[[1]]
+```
+
+# materialHardship
+```{r, message=FALSE, warning=FALSE}
+data.filtered <- read.csv('../data/NAreplaced.csv') 
+select <- read.csv('../data/Updated_Features/materialHardship_features.csv')
+data.filtered <- data.filtered[,select$Codes] 
+
+data.train<-data.filtered[Index,]
+data.train<-as.data.frame(data.train)
+data.train<-cbind(label$materialHardship, data.train)
+colnames(data.train)[1]<-"materialHardship"
+
+# Stochastic Gradient Boosting
+fit.gbm <- train(materialHardship~., data=data.train, method="gbm", metric=metric, trControl=control, verbose=FALSE)
+materialHardship_prediction<-predict(fit.gbm, data.filtered)
+```
+
+# eviction
+```{r, message=FALSE, warning=FALSE}
+data.filtered <- read.csv('../data/NAreplaced.csv') 
+select <- read.csv('../data/Updated_Features/eviction_features.csv')
+data.filtered <- data.filtered[,select$Codes] 
+
+data.train<-data.filtered[Index,]
+data.train<-as.data.frame(data.train)
+data.train<-cbind(label$eviction, data.train)
+colnames(data.train)[1]<-"eviction"
+
+# Full Tree
+rt <- rpart(factor(eviction)~., data=data.train, method = "class")
+eviction_prediction<-ifelse(predict(rt,data.filtered)[,1]>=predict(rt,data.filtered)[,2], 0, 1)
+```
+
+# layoff
+```{r, message=FALSE, warning=FALSE}
+data.filtered <- read.csv('../data/NAreplaced.csv') 
+select <- read.csv('../data/Updated_Features/layoff_features.csv')
+data.filtered <- data.filtered[,select$Codes] 
+
+data.train<-data.filtered[Index,]
+data.train<-as.data.frame(data.train)
+data.train<-cbind(label$layoff, data.train)
+colnames(data.train)[1]<-"layoff"
+
+metric <- "Accuracy"
+# lda
+fit.lda <- train(factor(layoff)~., data=data.train, method="lda", metric=metric, trControl=control)
+layoff_prediction<-predict(fit.lda, data.filtered)
+```
+
+# jobTraining
+```{r, message=FALSE, warning=FALSE}
+data.filtered <- read.csv('../data/NAreplaced.csv') 
+select <- read.csv('../data/Updated_Features/jobTraining_features.csv')
+data.filtered <- data.filtered[,select$Codes] 
+
+data.train<-data.filtered[Index,]
+data.train<-as.data.frame(data.train)
+data.train<-cbind(label$jobTraining, data.train)
+colnames(data.train)[1]<-"jobTraining"
+
+# Random Forest
+rf <- randomForest(factor(jobTraining)~., data = data.train)
+jobTraining_prediction<-predict(rf, data.filtered)
+```
+
+```{r}
+result<-data.frame(c(1:4242),gpa_prediction, grit_prediction, materialHardship_prediction, eviction_prediction, layoff_prediction, jobTraining_prediction)
+colnames(result)<-colnames(label)
+write.csv(result, "prediction.csv", row.names = FALSE)
+```
 
 
