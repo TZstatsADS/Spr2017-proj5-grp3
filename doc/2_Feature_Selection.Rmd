@@ -9,20 +9,22 @@ This notebook is for Feature Selection.
 Step 3: feature selection
 ```{r}
 library(Boruta)
-
-ED.final<-read.csv("~/GitHub/Spr2017-proj5-grp3/data/NAreplaced.csv")
+load("../doc/data_info.RData")
+ED.final<-read.csv("../data/NAreplaced.csv")
 #names(ED.final[,1])="challengeID"
-label<-read.csv("~/Documents/FFChallenge/train.csv")
+label<-read.csv("../data/train.csv")
 
-
-label<-label[,1:2]
+# label<-label[,1:2] #gpa
+# label<-label[,c(1,3)] #grit
+# label<-label[,c(1,4)] #materialHardship
+label<-label[,c(1,7)] #jobTraining
 label=na.omit(label)
 Index=ED.final$challengeID %in% label$challengeID
 
 data.train<-ED.final[Index,]
 data.train<-as.data.frame(data.train)
 
-model.features = Boruta(data.train[,-1], label.train$gpa, maxRuns = 500)
+model.features = Boruta(data.train[,-1], label$jobTraining, maxRuns = 500)
 
 results = as.data.frame(model.features$finalDecision)
 which(results!="Rejected")
@@ -41,7 +43,7 @@ for (i in 1:length(Bcodes))
   {
     des = rbind(des, as.data.frame(data.info$description[data.info$code==Bcodes[i]]))
    #score = rbind(score, as.data.frame(imp$meanImp[which(rownames(imp)==Bcodes[i])]))
-
+s
   }
 
 }
@@ -51,8 +53,11 @@ decision = as.data.frame(model.features$finalDecision[model.features$finalDecisi
 Bdf = cbind(Bcodes, des, decision)
 colnames(Bdf) = c("Codes", "Description", "Decision")
 
-pred="gpa"
-write.csv(Bdf, paste0("../data/",pred,"features.csv"))
+pred="jobTraining"
+write.csv(Bdf, paste0("../data/",pred,"features.csv"), row.names = F)
+
+# write.csv(des, "temp_des.csv", row.names = F)
+# des <- read.csv("temp_des.csv")
 ```
 
 
