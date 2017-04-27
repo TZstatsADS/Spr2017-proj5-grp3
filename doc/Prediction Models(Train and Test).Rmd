@@ -10,11 +10,12 @@ output: pdf_document
 source("../lib/modelFunc.R")
 data.filtered <- read.csv('../data/NAreplaced.csv') #4242 1388
 select <- read.csv('../data/Updated_Features/gpa_features.csv')
-data.filtered <- data.filtered[,select$Codes] # 4242*64
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 label <- read.csv('../data/train.csv')
 label<-na.omit(label)
-Index<-data.filtered$challengeID %in% label$challengeID
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
@@ -35,7 +36,8 @@ model_selection_con(train[,-1], test, y)
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/grit_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
@@ -55,7 +57,8 @@ model_selection_con(train[,-1], test, y)
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/materialHardship_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
@@ -75,7 +78,8 @@ model_selection_con(train[,-1], test, y)
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/eviction_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
@@ -95,7 +99,8 @@ model_selection_cat(train[,-1], test, y)
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/layoff_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
@@ -115,7 +120,8 @@ model_selection_cat(train[,-1], test, y)
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/jobTraining_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)

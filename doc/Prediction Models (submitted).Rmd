@@ -13,22 +13,30 @@ library(e1071)
 library(foreach)
 library(mlbench)
 library(caret)
+load("../data/categorical.RData")
+factor1<-function(x){
+  return(factor(x,levels=as.integer(unique(x))))
+}
 ```
 
 # GPA
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') #4242 1388
 select <- read.csv('../data/Updated_Features/gpa_features.csv')
-data.filtered <- data.filtered[,select$Codes] # 4242*64
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] # 4242*64
 
 label <- read.csv('../data/train.csv')
 label<-na.omit(label)
-Index<-data.filtered$challengeID %in% label$challengeID
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 data.train<-cbind(label$gpa, data.train)
 colnames(data.train)[1]<-"gpa"
+
+cat.idx<-colnames(data.train) %in% categorical
+data.train[,cat.idx]<-apply(data.train[,cat.idx], 2, factor1)
 
 control <- trainControl(method="repeatedcv", number=10, repeats=3)
 seed <- 7
@@ -43,81 +51,90 @@ gpa_prediction<-predict(fit.gbm, data.filtered)
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/grit_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 data.train<-cbind(label$grit, data.train)
 colnames(data.train)[1]<-"grit"
 
-# gamboostLSS
-lmLSS <- glmboostLSS(grit~., data=data.train)
-grit_prediction<- predict(lmLSS,data.filtered)[[1]]
+# SVM
+svm_fit<-svm(grit~., data=data.train)
+svm_predictions<-predict(svm_fit,newdata=data.filtered)
+# Random Forest
+rf <- randomForest(grit~., data=data.train)
+rf_predictons<-predict(rf, data.filtered)
+# Ensemble SVM and Random Forest
+grit_prediction<-(svm_predictions+rf_predictons)/2
 ```
 
 # materialHardship
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/materialHardship_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 data.train<-cbind(label$materialHardship, data.train)
 colnames(data.train)[1]<-"materialHardship"
 
-# Stochastic Gradient Boosting
-fit.gbm <- train(materialHardship~., data=data.train, method="gbm", metric=metric, trControl=control, verbose=FALSE)
-materialHardship_prediction<-predict(fit.gbm, data.filtered)
+# Random Forest
+rf <- randomForest(materialHardship~., data=data.train)
+materialHardship_prediction<-predict(rf, data.filtered)
 ```
 
 # eviction
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/eviction_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 data.train<-cbind(label$eviction, data.train)
 colnames(data.train)[1]<-"eviction"
 
-# Full Tree
-rt <- rpart(factor(eviction)~., data=data.train, method = "class")
-eviction_prediction<-ifelse(predict(rt,data.filtered)[,1]>=predict(rt,data.filtered)[,2], 0, 1)
+# Random Forest
+rf <- randomForest(factor(eviction)~., data=data.train)
+eviction_prediction<-predict(rf, data.filtered)
 ```
 
 # layoff
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/layoff_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 data.train<-cbind(label$layoff, data.train)
 colnames(data.train)[1]<-"layoff"
 
-metric <- "Accuracy"
-# lda
-fit.lda <- train(factor(layoff)~., data=data.train, method="lda", metric=metric, trControl=control)
-layoff_prediction<-predict(fit.lda, data.filtered)
+# SVM
+svm_fit<-svm(factor(layoff)~., data=data.train)
+layoff_prediction<-predict(svm_fit,newdata=data.filtered)
 ```
 
 # jobTraining
 ```{r, message=FALSE, warning=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/jobTraining_features.csv')
-data.filtered <- data.filtered[,select$Codes] 
+select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
+data.filtered <- data.filtered[,select.idx] 
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 data.train<-cbind(label$jobTraining, data.train)
 colnames(data.train)[1]<-"jobTraining"
 
-# Random Forest
-rf <- randomForest(factor(jobTraining)~., data = data.train)
-jobTraining_prediction<-predict(rf, data.filtered)
+# SVM
+svm_fit<-svm(factor(jobTraining)~., data=data.train)
+jobTraining_prediction<-predict(svm_fit,newdata=data.filtered)
 ```
 
 ```{r}
