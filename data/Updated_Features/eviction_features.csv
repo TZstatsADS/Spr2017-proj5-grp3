@@ -1,37 +1,37 @@
-"Codes","Description","Decision"
-"f5j6c","J6C. Value of vehicle if sold","Tentative"
-"hv5_cwtkg","child's weight in kg","Confirmed"
-"hv5_bmiz","Child's Body Mass Index Z-score","Confirmed"
-"hv5_haz","Child's height-for-age Z-score","Confirmed"
-"hv5_mwtkg","BioMom's weight in kg","Tentative"
-"cf5povco","Constructed - father's household income/poverty threshold at 9-year","Confirmed"
-"cf5povcob","Constructed - father's household income/poverty threshold at 9-year, mother repo","Confirmed"
-"m5f8b2_isna",NA,"Confirmed"
-"m5f8c2_isna",NA,"Confirmed"
-"m5f23a","F23A. Received free food or meals in past 12 months","Confirmed"
-"m5f23b","F23B. Were hungry but didn't eat because couldn't afford food in past 12 months","Confirmed"
-"m5f23c","F23C. Did not pay full amount of rent/mortgage payments in past 12 months","Confirmed"
-"m5f23g","F23G. Borrowed money from friends/family to help pay bills in past 12 months","Confirmed"
-"m5f23k","F23K. Telephone service disconnected because wasn't enough money in past 12 mont","Confirmed"
-"m5h1","H1. My religious faith is an important guide for my daily life","Confirmed"
-"m5h2","H2. Frequency you attend religious services","Confirmed"
-"p5q1d","Q1D. Parent has hit child on bottom with something like brush or other hard obje","Confirmed"
-"p5q1n","Q1N. Parent has called child dumb/lazy/some other name like that","Confirmed"
-"p5q2d","Q2D. Parent was not able to make sure child got to doctor or hospital when neede","Confirmed"
-"p5q2e","Q2E. Parent was so drunk or high that had problem taking care of child","Confirmed"
-"p5q3x","Q3X. Child doesn't seem to feel guilty after misbehaving","Confirmed"
-"p5q3au","Q3AU. Child is constipated, doesn't have bowel movements","Confirmed"
-"p5q3av","Q3AV. Child is too fearful or anxious","Tentative"
-"p5q3bb6","Q3BB6. Child has stomach aches or cramps without known medical cause.","Confirmed"
-"p5q4a","Q4A. Respondent is biological parent","Confirmed"
-"o5a7b","A7B. Crumbling or damaged walls","Confirmed"
-"o5c3","C3. Interior of home contains open cracks or holes in walls/ceiling","Confirmed"
-"o5c4","C4. Interior of home contains holes in the floor","Confirmed"
-"o5c5","C5. Interior of home contains broken plaster or peeling paint","Confirmed"
-"o5c10","C10. The environment inside the home is unsafe for young children","Confirmed"
-"o5c13","C13. Home overly noisy - from noise outside the home","Confirmed"
-"o5c14","C14. Obvious signs of recent alcohol/non-prescription drug consumption inside ho","Confirmed"
-"t5a4","A4. Child in your class since beginning of academic year","Confirmed"
-"t5b3f","B3F. Child is easily embarrassed","Confirmed"
-"t5b4q","B4Q. Child has difficulty waiting his/her turn","Confirmed"
-"t5d1a","D1A. Child's parents/guardians attended regularly scheduled conferences","Confirmed"
+Codes,Description,Decision
+f5j6c,J6C. Value of vehicle if sold,Tentative
+hv5_cwtkg,child's weight in kg,Confirmed
+hv5_bmiz,Child's Body Mass Index Z-score,Confirmed
+hv5_haz,Child's height-for-age Z-score,Confirmed
+hv5_mwtkg,BioMom's weight in kg,Tentative
+cf5povco,Constructed - father's household income/poverty threshold at 9-year,Confirmed
+cf5povcob,"Constructed - father's household income/poverty threshold at 9-year, mother repo",Confirmed
+m5f8b2_isna,(Answer missing) Number of months received income from food stamps/EBT in last 12 months,Confirmed
+m5f8c2_isna,(Answer missing) Approximate amount received in the last month you received food stamps/EBT,Confirmed
+m5f23a,F23A. Received free food or meals in past 12 months,Confirmed
+m5f23b,F23B. Were hungry but didn't eat because couldn't afford food in past 12 months,Confirmed
+m5f23c,F23C. Did not pay full amount of rent/mortgage payments in past 12 months,Confirmed
+m5f23g,F23G. Borrowed money from friends/family to help pay bills in past 12 months,Confirmed
+m5f23k,F23K. Telephone service disconnected because wasn't enough money in past 12 mont,Confirmed
+m5h1,H1. My religious faith is an important guide for my daily life,Confirmed
+m5h2,H2. Frequency you attend religious services,Confirmed
+p5q1d,Q1D. Parent has hit child on bottom with something like brush or other hard obje,Confirmed
+p5q1n,Q1N. Parent has called child dumb/lazy/some other name like that,Confirmed
+p5q2d,Q2D. Parent was not able to make sure child got to doctor or hospital when neede,Confirmed
+p5q2e,Q2E. Parent was so drunk or high that had problem taking care of child,Confirmed
+p5q3x,Q3X. Child doesn't seem to feel guilty after misbehaving,Confirmed
+p5q3au,"Q3AU. Child is constipated, doesn't have bowel movements",Confirmed
+p5q3av,Q3AV. Child is too fearful or anxious,Tentative
+p5q3bb6,Q3BB6. Child has stomach aches or cramps without known medical cause.,Confirmed
+p5q4a,Q4A. Respondent is biological parent,Confirmed
+o5a7b,A7B. Crumbling or damaged walls,Confirmed
+o5c3,C3. Interior of home contains open cracks or holes in walls/ceiling,Confirmed
+o5c4,C4. Interior of home contains holes in the floor,Confirmed
+o5c5,C5. Interior of home contains broken plaster or peeling paint,Confirmed
+o5c10,C10. The environment inside the home is unsafe for young children,Confirmed
+o5c13,C13. Home overly noisy - from noise outside the home,Confirmed
+o5c14,C14. Obvious signs of recent alcohol/non-prescription drug consumption inside ho,Confirmed
+t5a4,A4. Child in your class since beginning of academic year,Confirmed
+t5b3f,B3F. Child is easily embarrassed,Confirmed
+t5b4q,B4Q. Child has difficulty waiting his/her turn,Confirmed
+t5d1a,D1A. Child's parents/guardians attended regularly scheduled conferences,Confirmed

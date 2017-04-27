@@ -128,6 +128,8 @@ lmbagErr<-Error(lm_predictions) # 0.3571328
 predictions<-(lm_predictions+test.rf)/2
 lmrfErr<-Error(predictions) # 0.3396056
 ```
+
+
 ```{r}
 # SVM Bagging
 predictions<-foreach(m=1:iterations,.combine=cbind) %do% {

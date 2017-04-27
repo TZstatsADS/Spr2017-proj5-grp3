@@ -1,21 +1,21 @@
-"Codes","Description","Decision"
-"f5i13","i13. how much you earn in that job, before taxes","Confirmed"
-"hv5_ppvtss","PPVT standard score","Confirmed"
-"hv5_11a1","11a1. child height measurements 1","Confirmed"
-"hv5_11a2","11a2. child height measurements 2","Confirmed"
-"hv5_chtcm","child height(cm.)-from mult. measures","Confirmed"
-"hv5_haz","Child's height-for-age Z-score","Confirmed"
-"cm5hhinc","Constructed - Mother's Household income (with imputed values)","Confirmed"
-"cf5hhinc","Constructed - Father's Household income (with imputed values)","Confirmed"
-"cf5hhincb","Constructed - Household income mother report for married/cohab if available (wit","Confirmed"
-"cf5povco","Constructed - father's household income/poverty threshold at 9-year","Confirmed"
-"k5a2b","A2B. Your mom listens to your side of an argument","Confirmed"
-"k5e1d","E1D. Frequency you felt safe at your school","Confirmed"
-"m5f8a3","F8A3. Received income from other assistance in last 12 months","Confirmed"
-"f5c1","C1. Your relationship with child's mother","Confirmed"
-"f5i13p","I13P. Unit: Amount you usually earn in this job before taxes/deductions","Confirmed"
-"p5l1a","L1A. Type of school child attended last school year","Confirmed"
-"p5q1c","Q1C. Parent shook child","Confirmed"
-"p5q2d","Q2D. Parent was not able to make sure child got to doctor or hospital when neede","Confirmed"
-"t5b4k","B4K. Child leaves seat when remaining seated is expected","Confirmed"
-"hv5_ppvtpr","PPVT percentile rank","Confirmed"
+Codes,Description,Decision
+f5i13,"i13. how much you earn in that job, before taxes",Confirmed
+hv5_ppvtss,PPVT standard score,Confirmed
+hv5_11a1,11a1. child height measurements 1,Confirmed
+hv5_11a2,11a2. child height measurements 2,Confirmed
+hv5_chtcm,child height(cm.)-from mult. measures,Confirmed
+hv5_haz,Child's height-for-age Z-score,Confirmed
+cm5hhinc,Constructed - Mother's Household income (with imputed values),Confirmed
+cf5hhinc,Constructed - Father's Household income (with imputed values),Confirmed
+cf5hhincb,Constructed - Household income mother report for married/cohab if available (wit,Confirmed
+cf5povco,Constructed - father's household income/poverty threshold at 9-year,Confirmed
+k5a2b,A2B. Your mom listens to your side of an argument,Confirmed
+k5e1d,E1D. Frequency you felt safe at your school,Confirmed
+m5f8a3,F8A3. Received income from other assistance in last 12 months,Confirmed
+f5c1,C1. Your relationship with child's mother,Confirmed
+f5i13p,I13P. Unit: Amount you usually earn in this job before taxes/deductions,Confirmed
+p5l1a,L1A. Type of school child attended last school year,Confirmed
+p5q1c,Q1C. Parent shook child,Confirmed
+p5q2d,Q2D. Parent was not able to make sure child got to doctor or hospital when neede,Confirmed
+t5b4k,B4K. Child leaves seat when remaining seated is expected,Confirmed
+hv5_ppvtpr,PPVT percentile rank,Confirmed
