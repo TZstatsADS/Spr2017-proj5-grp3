@@ -1,0 +1,34 @@
+Feature ExplanationPart 1: eviction# feature selected: 36Feature description: Most of the features are related to children themselves, relationships between parents and children and what parents’ behaviors or effects on children.Typical feature examples:P5q1d: Parents has hit child on bottom with something like brush or other hard object 
+P5q3av; Child is too fearful or anxiousO5c10: The environment inside the home is unsafe for young children......Interesting feature examples:M5h2: Frequency you attend religious services 
+F5j6c: Value of vehicle if soldM5f8b2_isna, M5f8c2_isna: NA partPossible future research:Is there any relationship between religious activities and eviction behaviors?Why does vehicle make effects on eviction behaviors?Is there any pattern or trend for the answers of M5f8b2_isna and M5f8c2_isna, which contributes to eviction behaviors?
+Part 2: gpa# feature selected: 63Feature description: Most of the features are related to inheritance factors from parents and environment factors to make effects on children’s learning ability.Typical feature example:K5g2d: It’s hard for me to finish my schoolwork 
+T5b2f: child shows eagerness to learn new things 
+Cf5edu: father’s educationInteresting feature examples:F5j6c: value of vehicle if soldF5g35: age when you had sexal intercourse for the first time
+Possible future research:Why does vehicle sold make effects on children’s gpa? Does the tools of transportation play an important role?Why does sexal intercourse age contribute to children’s gpa? Does it related to inheritance factors?
+Part 3: grit# feature selected: 21Feature description: Most of the features are related to children’s attitudes to life, behaviorswhen they face challenges and Woodcock Johnnson Test scores.Typical feature example:Hv5_wj9ss: Woodock Johnoson Test 9 standard score 
+K5g2f: I get distracted easilyP5q3ar: Child has nervous movements or twiches4. Layoff: 
+# features: 20
+Description: Most features are related to income (father, mother and household) and children’s heights.
+Typical features examples: 
+f5i13: i13. how much you earn in that job, before taxes
+cf5hhincb: Constructed - Household income mother report for married/cohab if available
+hv5_11a1:11a1. child height measurements 1
+
+5. Material Hardship:
+# features: 46
+Description: Most features are about income (parents), limited budget, unsafe feeling of children and insurance covered.
+Typical features examples: 
+cm5hhinc       Constructed - Mother's Household income (with imputed values)
+p5h14b_3      H14B_3. Insurance through PCG's employer
+Interesting Features:  
+p5h15c     H15C. Hours a day child spends with someone who is smoking
+f5j4a	    J4A. Name on bank account
+p5h15 	    H15. PCG/Bio Parent smokes
+Future Research: Why smoking is related to material hardship?
+
+6. Job Training: 
+# features: 20
+Description: Most features are related to income, amount time to handle family needs
+Typical features examples: 
+m5i16c      I16C. In my work schedule I have enough flexibility to handle family needs
+cf5povco    Constructed - father's household income/poverty threshold at 9-year
