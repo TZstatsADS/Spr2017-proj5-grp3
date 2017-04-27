@@ -1,0 +1,74 @@
+Codes,Description,Decision
+m5j1,J1. Total household income before taxes/deductions in past 12 months,Confirmed
+f5a4,A4. Relationship with child's biological mother now,Confirmed
+f5g35,G35. Age when you had sexual intercourse for the first time,Tentative
+f5i13,"i13. how much you earn in that job, before taxes",Confirmed
+f5j1,J1. Total household income before taxes/deductions in past 12 months,Confirmed
+f5j6c,J6C. Value of vehicle if sold,Confirmed
+f5k7,K7. Number of child's close friends you know by sight and first and last name,Confirmed
+p5i34,"I34. Number of child's close friends father knows by sight, first and last name",Tentative
+hv5_ppvtss,PPVT standard score,Confirmed
+hv5_wj9ss,Woodcock Johnson Test 9 standard score,Confirmed
+hv5_wj10ss,Woodcock Johnson Test 10 standard score,Confirmed
+hv5_wj9raw,Woodcock Johnson Test 9 raw score,Confirmed
+cm5hhinc,Constructed - Mother's Household income (with imputed values),Confirmed
+cf5hhinc,Constructed - Father's Household income (with imputed values),Confirmed
+cf5hhincb,Constructed - Household income mother report for married/cohab if available (wit,Confirmed
+cm5povco,Constructed - Mother's household income/poverty threshold at 9-year,Confirmed
+cf5povco,Constructed - father's household income/poverty threshold at 9-year,Confirmed
+cf5povcob,"Constructed - father's household income/poverty threshold at 9-year, mother repo",Confirmed
+k5g2b,G2B. I often argue with other kids,Tentative
+k5g2c,G2C. I worry about taking tests,Confirmed
+k5g2d,G2D. It's hard for me to pay attention,Tentative
+k5g2f,G2F. I get distracted easily,Tentative
+k5g2h,G2H. It's hard for me to finish my schoolwork,Confirmed
+k5g2m,G2M. I get in trouble for talking and disturbing others,Confirmed
+f5a6,A6. Biological children living apart from you,Tentative
+f5j4a,J4A. Name on bank account,Confirmed
+p5i31h,I31H. Frequency father talked about day with child in past month,Tentative
+p5j4b,J4B. Child receives free or reduced price lunch,Confirmed
+p5l17d,L17D. Discussed homework not done with child's teacher in this/last school year,Tentative
+p5q1k,"Q1K. Parent has slapped child on hand, arm or leg",Tentative
+p5q3bw,Q3BW. Child is inattentive or easily distracted,Confirmed
+o5g4,G4. Parent/PCG's ability to articulate answers,Confirmed
+t5b1d,B1D. Child says nice things about self/others when appropriate,Confirmed
+t5b1f,B1F. Child uses free time in an acceptable way,Confirmed
+t5b1g,B1G. Child finishes class assignments with time limits,Confirmed
+t5b1l,B1L. Child uses time appropriately while waiting for help,Confirmed
+t5b1m,B1M. Child produces correct schoolwork,Confirmed
+t5b1p,B1P. Child follows your directions,Confirmed
+t5b1u,B1U. Child ignores peer distractions when doing class work,Confirmed
+t5b1v,B1V. Child keeps desk clean and neat without being reminded,Confirmed
+t5b1w,B1W. Child attends to your instructions,Confirmed
+t5b2a,B2A. Child pays attention well,Confirmed
+t5b2b,B2B. Child persists in completing tasks,Confirmed
+t5b2c,B2C. Child works independently,Confirmed
+t5b2d,B2D. Child easily adapts to change in routine,Tentative
+t5b2e,B2E. Child keeps belongings organized,Confirmed
+t5b2f,B2F. Child shows eagerness to learn new things,Confirmed
+t5b2g,B2G. Child follows classroom rules,Confirmed
+t5b4a,"B4A. Child is inattentive, easily distracted",Confirmed
+t5b4c,B4C. Child restless in the 'squirmy' sense,Confirmed
+t5b4f,B4F. Child actively defies/refuses to comply with adults' requests,Confirmed
+t5b4h,B4H. Child is poor in spelling,Confirmed
+t5b4i,B4I. Child cannot remain still,Confirmed
+t5b4k,B4K. Child leaves seat when remaining seated is expected,Confirmed
+t5b4l,B4L. Child fidgets with hands or feet or squirms in seat,Tentative
+t5b4r,B4R. Child lacks interest in schoolwork,Confirmed
+t5b4s,B4S. Child has distractibility or attention span problem,Confirmed
+t5b4y,B4Y. Child fails to finish things he or she starts,Confirmed
+t5b4z,B4Z. Child does not follow through on instructions and fails to finish homework,Confirmed
+t5c13a,C13A. Child's language and literacy skills,Confirmed
+t5c13b,C13B. Child's science and social studies,Confirmed
+t5c13c,c13C. Child's mathematical skills,Confirmed
+t5c16,C16. Frequency child works to best of her/his ability,Tentative
+t5d2,D2. Child's father attended conference or meeting this year,Tentative
+cf5edu,Father's education: year 9,Confirmed
+cf5povca,Constructed - Father's poverty category at 9-year,Confirmed
+cf5povcab,"Constructed - Father's poverty category at 9-year, mother reports for married/co",Tentative
+hv5_ppvtae,PPVT age equivalency,Confirmed
+hv5_ppvtpr,PPVT percentile rank,Confirmed
+hv5_wj9pr,Woodcock Johnson Test 9 percentile rank,Confirmed
+hv5_wj9ae,Woodcock Johnson Test 9 age equivalency,Confirmed
+hv5_wj10pr,Woodcock Johnson Test 10 percentile rank,Confirmed
+hv5_wj10ae,Woodcock Johnson Test 10 age equivalency,Confirmed

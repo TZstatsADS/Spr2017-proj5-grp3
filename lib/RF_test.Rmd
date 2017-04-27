@@ -1,0 +1,102 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+fea = read.csv("../data/iteration_one.csv")
+background = read.csv("../data/data_from_scratch.csv")
+x = background[, colnames(background) %in% fea$Codes]
+y= read.csv("../data/train.csv")
+x = cbind(background$challengeID, x)
+colnames(x)[1]="challengeID"
+y = y[, 1:2]
+index = complete.cases(y)
+y = y[index, ]
+
+temp=data.frame()
+for (i in 1:nrow(y))
+{
+  if(y$challengeID[i] %in% x$challengeID)
+  {
+    temp = rbind(temp, x[x$challengeID==y$challengeID[i], ])
+  }
+}
+x = temp
+
+x = x[, -1]
+y = y[, 2]
+dat = cbind(x, y)
+rm(background, fea, temp, x, i, index, y)
+```
+
+
+
+Train a RF model
+```{r}
+library(randomForest)
+sam = sample(nrow(dat), floor(nrow(dat)*0.8))
+train = dat[sam, ]
+test = dat[-sam, ]
+
+# these two lines will use all data to train, and this model will be used to test on the 4242 observations.
+test = dat
+train = dat
+
+
+rf = randomForest(x = train[,-ncol(train)], y = train[, ncol(train)], mtry = 32, ntree = 1100)
+rf_pred = predict(rf, newdata = test[, -ncol(test)])
+
+#rf_pred = rf_pred + 0.15
+
+rf_results = cbind(rf_pred, test[, ncol(test)])
+
+rf_mse = mean((rf_results[,1]-rf_results[,2])^2)
+rf_over = mean(rf_results[,1]-rf_results[,2]>0)
+rf_under = mean(rf_results[,1]-rf_results[,2]<0)
+rf_correct = mean(abs(rf_results[,1]-rf_results[,2])<0.15)
+
+
+
+########### optional; reduces accuracy ################
+# round to nearest category
+lis = c(1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25 ,3.5 ,3.75 ,4)
+for(i in 1:length(rf_pred))
+{
+  rf_pred[i] = lis[which.min(abs(rf_pred[i]-lis))]
+}
+
+
+
+```
+
+
+
+
+I am actually tuning the parameters (mtry and ntree)
+```{r}
+
+df = data.frame()
+
+for(i in seq(900,2000,100))
+{
+  rf = randomForest(x = train[,-ncol(train)], y = train[, ncol(train)], mtry = 32, ntree = 1100)
+  rf_pred = predict(rf, newdata = test[, -ncol(test)])
+
+  #rf_pred = rf_pred + 0.15
+
+  rf_results = cbind(rf_pred, test[, ncol(test)])
+  
+  df[i,1] = i
+  df[i,2] = mean((rf_results[,1]-rf_results[,2])^2)
+  df[i,3] = mean(rf_results[,1]-rf_results[,2]>0)
+  df[i,4] = mean(rf_results[,1]-rf_results[,2]<0)
+  df[i,5] = mean(abs(rf_results[,1]-rf_results[,2])<0.15)
+  
+    
+}
+
+colnames(df) = c("ntree", "rf_mse", "rf_over", "rf_under", "rf_correct")
+```
+
