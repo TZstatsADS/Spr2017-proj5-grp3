@@ -9,34 +9,37 @@ output:
 ---
 
 
-Fragile Families Challenge is a scientific mass collaboration combining:
-predictive modeling
-causal inference
-and qualitative interviews 
-to improve the lives of disadvantaged children in the US. 
+The Fragile Families Challenge is a mass collaboration that will combine predictive modeling, causal inference, and in-depth interviews to yield insights that can improve the lives of disadvantaged children in the United States.  
+
+The Fragile Families Challenge is based on the Fragile Families and Child Wellbeing Study, which has followed thousands of American families for more than 15 years.  During this time, the Fragile Families study collected information about the children, their parents, their schools, and their larger environments.
+
+![](http://www.fragilefamilies.princeton.edu/sites/fragilefamilies/files/styles/panopoly_image_full/public/pages/study_design_0.png?itok=ttXLjlDY)
+
+These data have been used in hundreds of scientific papers and dozens of dissertations, and insight from these studies are routinely shared with policy makers around the world through the Future of Children, which is jointly published by Princeton University and Brookings Institution. 
+
+The Fragile Families Challenge is our attempt to create a new way of doing social research, one that is much more open to the talents and efforts of everyone. We expect that by combining ideas from social science and data science, we can—together—help address important scientific and social problems. And, we expect that through a mass collaboration we will accomplish things that none of us could accomplish individually.
+
+**The Challenge Problem:**
+
+Given all the background data from birth to year 9 and some training data from year 15, how well can you infer six key outcomes in the year 15 test data?
+
+Continuous outcomes: GPA, Grit, Material hardship
+
+Binary outcomes: Housing eviction, Layoff of a caregiver, Job training for a caregiver 
+
+![](http://www.fragilefamilieschallenge.org/wp-content/uploads/2017/02/ff_design_matrix_challenge.png)
 
 
-Key research question:  What can be done to improve the life chances of disadvantaged children? 
-Social Scientists <--> Data Scientists 
 
 
 
-#Data
+#Step 1: Data Cleansing
 
-Continuous outcomes: 
-GPA, Grit, Material hardship
-
-Binary outcomes:
-Housing eviction,
-Layoff of a caregiver,
-Job training for a caregiver 
+**Our Assumption:** Age 9 data has already included all the information from age 0-5
 
 
-
-Assumption:
-Age 9 data has already included all the information from age 0-5
-
-```{r, include=FALSE}
+##1.1 Extract the age 9 data from codebook and background file
+```{r, eval=FALSE}
 library(data.table)
 library(stringr)
 library(dmm)
@@ -68,7 +71,6 @@ featnum<-nrow(data.info)
 extract.feature<-features %in% data.info$code  
 sum(extract.feature)
 
-
 extract.data<-background[,extract.feature]
 extract.data<-cbind(challengeID=background[,1],extract.data)
 
@@ -76,25 +78,35 @@ write.csv(extract.data,file="../data/extract_data.csv")
 save(data.info, file="../data/data_info.RData")
 ```
 
-[data1](~/GitHub/Spr2017-proj5-grp3/figs/140.pic.jpg)
 
 
-[data2](~/GitHub/Spr2017-proj5-grp3/figs/160.pic.jpg)
+##1.2 Deal with missing data
 
-Step 1: clean data
+Several missing value codes:
 
- Several missing value codes:
- -9 Not in wave 
- -6 Valid skip 
- -2 Dont know 
- -1 Refuse 
- NA also used occasionally 
+-9 Not in wave 
 
- Categorical feature:
+-6 Valid skip 
+
+-2 Dont know 
+
+-1 Refuse 
+
+NA also used occasionally 
+
+
+**Categorical feature:**
+
 Make NA a special level
 
 
-```{r, message=FALSE, warning=FALSE}
+**Continuous feature:**
+
+Create a dummy variable indicating the missing situation of the feature
+
+Impute the missing value with median
+
+```{r, message=FALSE, warning=FALSE,eval=FALSE}
 #remove columns with missing values more than 80%
 extract.data<-read.csv("../data/extract_data.csv")
 
@@ -116,19 +128,6 @@ ED.final<-cbind(ED.continuous,ED.categorical,ED.factor)
 
 ED.final=as.data.frame(ED.final)
 
-```
-
-
-
-Step 2: solving missing data problem
-
-Continuous feature:
-Create a dummy variable indicating the missing situation of the feature
-Impute the missing value with median
-
-
-```{r}
-
 final.mis<-ED.final[,which(unlist(lapply(ED.final, function(x) anyNA(x))))]
 missing=colnames(final.mis)
 
@@ -144,18 +143,24 @@ save(categorical, file="../data/categorical.RData")
 
 
 
-Step 3: feature selection
+
+
+#Step 2: Feature Selection
+
+We used Boruta Package to conduct feature selection.It works as a wrapper algorithm around Random Forest. 
 
 Firstly, it adds randomness to the given data set by creating shuffled copies of all features (which are called shadow features).
 
 Then, it trains a random forest classifier on the extended data set and applies a feature importance measure (the default is Mean Decrease Accuracy) to evaluate the importance of each feature where higher means more important.
 
 At every iteration, it checks whether a real feature has a higher importance than the best of its shadow features (i.e. whether the feature has a higher Z score than the maximum Z score of its shadow features) and constantly removes features which are deemed highly unimportant.
+
 Finally, the algorithm stops either when all features gets confirmed or rejected or it reaches a specified limit of random forest runs.
 
 
 ```{r, eval=FALSE}
 library(Boruta)
+
 load("../doc/data_info.RData")
 ED.final<-read.csv("../data/NAreplaced.csv")
 #names(ED.final[,1])="challengeID"
@@ -176,19 +181,16 @@ model.features = Boruta(data.train[,-1], label$jobTraining, maxRuns = 500)
 results = as.data.frame(model.features$finalDecision)
 which(results!="Rejected")
 Bcodes = rownames(results)[which(results!="Rejected")]
-
 ```
 
 
-What are the descriptions of the features (Boruta)?
+What are the descriptions of the features (Boruta)? 
 
 ```{r}
 des = data.frame()
 #score = data.frame()
-for (i in 1:length(Bcodes))
-{
-  if(Bcodes[i] %in% data.info$code)
-  {
+for (i in 1:length(Bcodes)){
+  if(Bcodes[i] %in% data.info$code){
     des = rbind(des, as.data.frame(data.info$description[data.info$code==Bcodes[i]]))
    #score = rbind(score, as.data.frame(imp$meanImp[which(rownames(imp)==Bcodes[i])]))
   }
@@ -200,16 +202,20 @@ Bdf = cbind(Bcodes, des, decision)
 colnames(Bdf) = c("Codes", "Description", "Decision")
 pred="jobTraining"
 write.csv(Bdf, paste0("../data/",pred,"features.csv"), row.names = F)
+```
 
-# write.csv(des, "temp_des.csv", row.names = F)
-# des <- read.csv("temp_des.csv")
+Let's have a look at some of the selected features.
+```{r}
+
 ```
 
 
-Fit model
+#Step 3: Model Selection
 
-# GPA
-```{r, message=FALSE, warning=FALSE}
+We decided to try a series of models imcluding: Linear Regression, Full tree, Pruned tree, Random Forest, Conditional inference trees, gamboostLSS, Gradient Boosting, Support Vector Machine, LM+RF, SVM+RF.
+
+## GPA
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 source("../lib/modelFunc.R")
 data.filtered <- read.csv('../data/NAreplaced.csv') #4242 1388
 select <- read.csv('../data/Updated_Features/gpa_features.csv')
@@ -231,11 +237,14 @@ train <- data.train[train.index,] #800*64
 test <- data.train[-train.index,] #214*64
 
 y<-train[,1]
+```
+
+```{r}
 model_selection_con(train[,-1], test, y)
 ```
 
-# Grit
-```{r, message=FALSE, warning=FALSE}
+## Grit
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/grit_features.csv')
 data.filtered <- data.filtered[,select$Codes] 
@@ -251,11 +260,15 @@ train <- data.train[train.index,] #800*64
 test <- data.train[-train.index,] #214*64
 
 y<-train[,1]
+```
+
+
+```{r}
 model_selection_con(train[,-1], test, y)
 ```
 
-# materialHardship
-```{r, message=FALSE, warning=FALSE}
+## materialHardship
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/materialHardship_features.csv')
 data.filtered <- data.filtered[,select$Codes] 
@@ -271,11 +284,14 @@ train <- data.train[train.index,] #800*64
 test <- data.train[-train.index,] #214*64
 
 y<-train[,1]
+```
+
+```{r}
 model_selection_con(train[,-1], test, y)
 ```
 
-# eviction
-```{r, message=FALSE, warning=FALSE}
+## eviction
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/eviction_features.csv')
 data.filtered <- data.filtered[,select$Codes] 
@@ -291,11 +307,14 @@ train <- data.train[train.index,] #800*64
 test <- data.train[-train.index,] #214*64
 
 y<-factor(train[,1])
+```
+
+```{r}
 model_selection_cat(train[,-1], test, y)
 ```
 
-# layoff
-```{r, message=FALSE, warning=FALSE}
+## layoff
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/layoff_features.csv')
 data.filtered <- data.filtered[,select$Codes] 
@@ -311,11 +330,14 @@ train <- data.train[train.index,] #800*64
 test <- data.train[-train.index,] #214*64
 
 y<-factor(train[,1])
+```
+
+```{r}
 model_selection_cat(train[,-1], test, y)
 ```
 
-# jobTraining
-```{r, message=FALSE, warning=FALSE}
+## jobTraining
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 data.filtered <- read.csv('../data/NAreplaced.csv') 
 select <- read.csv('../data/Updated_Features/jobTraining_features.csv')
 data.filtered <- data.filtered[,select$Codes] 
@@ -331,8 +353,19 @@ train <- data.train[train.index,] #800*64
 test <- data.train[-train.index,] #214*64
 
 y<-factor(train[,1])
+```
+
+```{r}
 model_selection_cat(train[,-1], test, y)
 ```
 
+# Step 4: Prediction
 
 
+
+```{r}
+
+```
+
+
+This predictive modeling is not the end of the project, however.  It is just the beginning.  We will use the models submitted to the Fragile Families Challenge to advance the scientific goals of the project, and we will publish the results in scientific journals, both individually and collectively.
