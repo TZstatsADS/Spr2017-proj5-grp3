@@ -15,6 +15,8 @@ Term: Spring 2017
 + Data: Fragile Families Challenge. It is a scientific mass collaboration combining predictive modeling,causal inference and qualitative interviews. Our project goal is to improve the lives of disadvantaged children in the US.
 
 + Data Cleaning:
+![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/140.pic.jpg)
+![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/160.pic.jpg)
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
