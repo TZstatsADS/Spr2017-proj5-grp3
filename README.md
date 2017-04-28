@@ -17,6 +17,11 @@ Term: Spring 2017
 + Data Cleaning:
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/140.pic.jpg)
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/160.pic.jpg)
++ Assumption: Age 9 data has already included all the information from age 0-5
++ Continuous outcomes: GPA, Grit, Material hardship
++ Binary outcomes: Housing eviction, Layoff of a caregiver, Job training for a caregiver 
+
+
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
