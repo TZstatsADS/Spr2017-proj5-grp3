@@ -17,14 +17,16 @@ Term: Spring 2017
 + Data Cleaning:
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/140.pic.jpg)
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/160.pic.jpg)
-+ Assumption: Age 9 data has already included all the information from age 0-5
-+ Continuous outcomes: GPA, Grit, Material hardship
-+ Binary outcomes: Housing eviction, Layoff of a caregiver, Job training for a caregiver 
-+ Missin Data: -9 Not in wave, -6 Valid skip, -2 Dont know, -1 Refuse, NA also used occasionally 
-+ Categorical feature: Make NA a special level
-+ Continuous feature: Create a dummy variable indicating the missing situation of the feature,Impute the missing value with median (library: Hmisc)
++Assumption: Age 9 data has already included all the information from age 0-5
++Continuous outcomes: GPA, Grit, Material hardship
++Binary outcomes: Housing eviction, Layoff of a caregiver, Job training for a caregiver 
++Missin Data: -9 Not in wave, -6 Valid skip, -2 Dont know, -1 Refuse, NA also used occasionally 
++Categorical feature: Make NA a special level
++Continuous feature: Create a dummy variable indicating the missing situation of the feature,Impute the missing value with median (library: Hmisc)
 
 + Feature Selection:Boruta package
+![alt tag]
+
 + Firstly, it adds randomness to the given data set by creating shuffled copies of all features.
 + Then, it trains a random forest classifier on the extended data set and applies a feature importance measure to evaluate the importance of each feature where higher means more important.
 + At every iteration, it checks whether a real feature has a higher importance than the best of its shadow features and constantly removes features which are deemed highly unimportant.
