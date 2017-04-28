@@ -207,13 +207,21 @@ write.csv(Bdf, paste0("../data/",pred,"features.csv"), row.names = F)
 Let's have a look at some of the selected features.
 ```{r}
 select <- read.csv('../data/Updated_Features/gpa_features.csv',stringsAsFactors = FALSE)
-as.data.table(c(select$Codes,select$Description))
+as.data.table(select)
 ```
 
 
 #Step 3: Model Selection
 
 We decided to try a series of models imcluding: Linear Regression, Full tree, Pruned tree, Random Forest, Conditional inference trees, gamboostLSS, Gradient Boosting, Support Vector Machine, LM+RF, SVM+RF.
+
+```{r}
+source("../doc/helper_func.R")
+for(f in c("gpa","grit","materialHardship")){
+  get.error(f)
+}
+#,"eviction","layoff","jobTraining"
+```
 
 ## GPA
 ```{r, message=FALSE, warning=FALSE, include=FALSE}

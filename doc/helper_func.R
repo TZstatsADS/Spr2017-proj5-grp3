@@ -1,8 +1,7 @@
 
 get.error<-function(f){
-  
-  f="gpa"
-  source("../lib/modelFunc.R")
+
+  source("../lib/helper_modelFunc.R")
   data.filtered <- read.csv('../data/NAreplaced.csv') #4242 1388
   select <- read.csv(paste0('../data/Updated_Features/',f,'_features.csv'),stringsAsFactors = FALSE)
   data.filtered <- subset(data.filtered,select=c("challengeID",select$Codes)) # 4242*64
@@ -17,8 +16,9 @@ get.error<-function(f){
   data.train<-as.data.frame(data.train)
   data.train<-cbind(label[,-1], data.train[,-1])
   colnames(data.train)[1]<-f
+
   
-  load("../data/categorical.RData")
+  load("~/GitHub/Spr2017-proj5-grp3/data/categorical.RData")
   cat=select$Codes[select$Codes %in% categorical]
   data.train[,cat]=lapply(data.train[,cat],factor)
   # create training and test data set
@@ -37,7 +37,15 @@ get.error<-function(f){
     }
   }
   
-  y<-train[,1]
+
   
-  model_selection_con(train[,-1], test, y)
+  if(f %in% c("gpa","grit","materialHardship")){
+    y=train[,1]
+  tep=model_selection_con(train,test,y)
+  }else{
+    y=factor(train[,1])
+    tep=model_selection_cat(train,test,y)
+  }
+  tep
+  save(tep,file=paste0("../data/",f,"_model.RData"))
 }
