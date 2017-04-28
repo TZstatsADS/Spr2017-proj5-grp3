@@ -19,12 +19,13 @@ Term: Spring 2017
 **Data Cleaning**:
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/140.pic.jpg)
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/160.pic.jpg)
-+Assumption: Age 9 data has already included all the information from age 0-5
-+Continuous outcomes: GPA, Grit, Material hardship
-+Binary outcomes: Housing eviction, Layoff of a caregiver, Job training for a caregiver 
-+Missin Data: -9 Not in wave, -6 Valid skip, -2 Dont know, -1 Refuse, NA also used occasionally 
-+Categorical feature: Make NA a special level
-+Continuous feature: Create a dummy variable indicating the missing situation of the feature,Impute the missing value with median (library: Hmisc)
+
++ Assumption: Age 9 data has already included all the information from age 0-5
++ Continuous outcomes: GPA, Grit, Material hardship
++ Binary outcomes: Housing eviction, Layoff of a caregiver, Job training for a caregiver 
++ Missin Data: -9 Not in wave, -6 Valid skip, -2 Dont know, -1 Refuse, NA also used occasionally 
++ Categorical feature: Make NA a special level
++ Continuous feature: Create a dummy variable indicating the missing situation of the feature,Impute the missing value with median (library: Hmisc)
 
 
 **Feature Selection**: Boruta package
