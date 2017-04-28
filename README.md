@@ -1,6 +1,7 @@
 # ADS Project 5: 
 
 Term: Spring 2017
+### [Presentation](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/doc/presentation.pdf)
 
 + Team #3
 + Projec title: Fragile Families Challenge Prediction
@@ -38,11 +39,11 @@ Term: Spring 2017
 
 **Prediction Model**:
 Our team attempts to use 14 models to predict results.
-![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/Model%20Summary.jpeg)
+Linear Regression, Full tree, Pruned tree, Random Forest, Conditional inference trees, Gamboostlss, Grandient Boosting, Support Vector Machine, LM+RF, SVM+RF, SVM+RF, glm, CS.O, KNN, LDA
 
 
 **Final Prediction Model**:
-![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/Final%20Prediction%20Model.jpeg)
+![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/prediction%20error.png)
 
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. Yue Gao is responsible for presentation, data cleaning and help to predict the results. Hongyi Zhu working with Chenyun Zhu clean the data and try to run different models. Chenyun Zhu used Boruta package to select features and work with Mengchen Li to explain the features. Mengchen Li writes the basic prediction model and Jingwen Yin improve the models.
