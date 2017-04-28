@@ -206,7 +206,8 @@ write.csv(Bdf, paste0("../data/",pred,"features.csv"), row.names = F)
 
 Let's have a look at some of the selected features.
 ```{r}
-
+select <- read.csv('../data/Updated_Features/gpa_features.csv',stringsAsFactors = FALSE)
+as.data.table(c(select$Codes,select$Description))
 ```
 
 
