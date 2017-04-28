@@ -17,10 +17,27 @@ Term: Spring 2017
 + Data Cleaning:
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/140.pic.jpg)
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/160.pic.jpg)
++ Assumption: Age 9 data has already included all the information from age 0-5
++ Continuous outcomes: GPA, Grit, Material hardship
++ Binary outcomes: Housing eviction, Layoff of a caregiver, Job training for a caregiver 
++ Missin Data: -9 Not in wave, -6 Valid skip, -2 Dont know, -1 Refuse, NA also used occasionally 
++ Categorical feature: Make NA a special level
++ Continuous feature: Create a dummy variable indicating the missing situation of the feature,Impute the missing value with median (library: Hmisc)
 
-+ Presentation PDF:
-[Here](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/doc/presentation.pdf)
++ Feature Selection:Boruta package
++ Firstly, it adds randomness to the given data set by creating shuffled copies of all features.
++ Then, it trains a random forest classifier on the extended data set and applies a feature importance measure to evaluate the importance of each feature where higher means more important.
++ At every iteration, it checks whether a real feature has a higher importance than the best of its shadow features and constantly removes features which are deemed highly unimportant.
++ Finally, the algorithm stops either when all features gets confirmed or rejected or it reaches a specified limit of random forest runs.
 
+
+
+
+
+
+
+
+	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
