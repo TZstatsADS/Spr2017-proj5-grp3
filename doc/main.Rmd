@@ -218,8 +218,8 @@ We decided to try a series of models imcluding: Linear Regression, Full tree, Pr
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 source("../lib/modelFunc.R")
 data.filtered <- read.csv('../data/NAreplaced.csv') #4242 1388
-select <- read.csv('../data/Updated_Features/gpa_features.csv')
-data.filtered <- data.filtered[,select$Codes] # 4242*64
+select <- read.csv('../data/Updated_Features/gpa_features.csv',stringsAsFactors = FALSE)
+data.filtered <- subset(data.filtered,select=c(challengeTD,select$Codes)) # 4242*64
 
 label <- read.csv('../data/train.csv')
 label<-na.omit(label)
@@ -360,7 +360,6 @@ model_selection_cat(train[,-1], test, y)
 ```
 
 # Step 4: Prediction
-
 
 
 ```{r}
