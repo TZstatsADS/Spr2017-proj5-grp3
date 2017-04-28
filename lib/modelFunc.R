@@ -43,10 +43,10 @@ model_selection_con<-function(train, test, y){
   test.rf<-predict(rf, test[,-1])
   rfErr<-Error(test, test.rf) 
   print(2)
-  # gamboostLSS
-  lmLSS <-  train(x=train, y=y, method="gamboost", trControl=control, metric=metric, verbose=FALSE)
-  test.pred.gam<- predict(lmLSS,test[,-1])
-  gamErr<-Error(test, test.pred.gam[[1]])
+  # # gamboostLSS
+  # lmLSS <-  train(x=train, y=y, method="gamboost", trControl=control, metric=metric, verbose=FALSE)
+  # test.pred.gam<- predict(lmLSS,test[,-1])
+  # gamErr<-Error(test, test.pred.gam[[1]])
   # SVM
   svm_fit <- train(x=train, y=y, method="svmRadial", metric=metric, trControl=control, verbose=FALSE)
   svm_predictions<-predict(svm_fit,newdata=test[,-1])
@@ -77,8 +77,8 @@ model_selection_con<-function(train, test, y){
   gbmErr<-Error(test, gbm_prediction)
   # Model Comparision
   # Create a data frame with the error metrics for each method
-  accuracy <- data.frame(Method = c("Linear Regression","Full tree","Pruned tree","Random Forest", "Conditional inference trees", 'gamboostLSS', "Gradient Boosting", "Support Vector Machine", "LM+RF", "SVM+RF"),
-                         Test.Error = c(linErr,treeErr,pruneErr, rfErr, ctErr, gamErr, gbmErr, svmErr, lmrfErr, svmrfErr))
+  accuracy <- data.frame(Method = c("Linear Regression","Full tree","Pruned tree","Random Forest", "Conditional inference trees", "Gradient Boosting", "Support Vector Machine", "LM+RF", "SVM+RF"),
+                         Test.Error = c(linErr,treeErr,pruneErr, rfErr, ctErr,gbmErr, svmErr, lmrfErr, svmrfErr))
   
   # Round the values and print the table
   accuracy$Test.Error <- round(accuracy$Test.Error,4)
