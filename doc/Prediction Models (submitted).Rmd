@@ -42,10 +42,10 @@ colnames(data.train)[1]<-"gpa"
 control <- trainControl(method="repeatedcv", number=10, repeats=3)
 seed <- 7
 metric <- "RMSE"
-# Stochastic Gradient Boosting
+# Random Forest
 set.seed(seed)
-fit.gbm <- train(gpa~., data=data.train, method="gbm", metric=metric, trControl=control, verbose=FALSE)
-gpa_prediction<-predict(fit.gbm, data.filtered)
+rf <- train(gpa~., data=data.train, method="rf", metric=metric, trControl=control, verbose=FALSE)
+gpa_prediction<-predict(rf, data.filtered)
 ```
 
 # Grit
@@ -71,14 +71,9 @@ for(i in which(cat.idx)){
 data.train<-cbind(label$grit, data.train)
 colnames(data.train)[1]<-"grit"
 
-# SVM
-fit.gbm <- train(grit~., data=data.train, method="svmRadial", metric=metric, trControl=control, verbose=FALSE)
-svm_prediction<-predict(fit.gbm, data.filtered)
-# Random Forest
-rf <- train(grit~., data=data.train, method="rf", metric=metric, trControl=control, verbose=FALSE)
-rf_predictons<-predict(rf, data.filtered)
-# Ensemble SVM and Random Forest
-grit_prediction<-(svm_predictions+rf_predictons)/2
+# Stochastic Gradient Boosting
+fit.gbm <- train(grit~., data=data.train, method="gbm", metric=metric, trControl=control, verbose=FALSE)
+grit_prediction<-predict(fit.gbm, data.filtered)
 ```
 
 # materialHardship
@@ -104,9 +99,9 @@ for(i in which(cat.idx)){
 data.train<-cbind(label$materialHardship, data.train)
 colnames(data.train)[1]<-"materialHardship"
 
-# Random Forest
-rf <- randomForest(materialHardship~., data=data.train)
-materialHardship_prediction<-predict(rf, data.filtered)
+# Stochastic Gradient Boosting
+fit.gbm <- train(materialHardship~., data=data.train, method="gbm", metric=metric, trControl=control, verbose=FALSE)
+materialHardship_prediction<-predict(fit.gbm, data.filtered)
 ```
 
 # eviction
@@ -133,7 +128,8 @@ data.train<-cbind(label$eviction, data.train)
 colnames(data.train)[1]<-"eviction"
 
 # Random Forest
-rf <- randomForest(factor(eviction)~., data=data.train)
+metric <- "Accuracy"
+rf <- train(factor(eviction)~., data=data.train, method="rf", metric=metric, trControl=control, verbose=FALSE)
 eviction_prediction<-predict(rf, data.filtered)
 ```
 
@@ -160,9 +156,9 @@ for(i in which(cat.idx)){
 data.train<-cbind(label$layoff, data.train)
 colnames(data.train)[1]<-"layoff"
 
-# SVM
-svm_fit<-svm(factor(layoff)~., data=data.train)
-layoff_prediction<-predict(svm_fit,newdata=data.filtered)
+# LDA
+lda <- train(factor(layoff)~., data=data.train, method="lda", metric=metric, trControl=control, verbose=FALSE)
+layoff_prediction<-predict(lda,newdata=data.filtered)
 ```
 
 # jobTraining
@@ -188,9 +184,9 @@ for(i in which(cat.idx)){
 data.train<-cbind(label$jobTraining, data.train)
 colnames(data.train)[1]<-"jobTraining"
 
-# SVM
-svm_fit<-svm(factor(jobTraining)~., data=data.train)
-jobTraining_prediction<-predict(svm_fit,newdata=data.filtered)
+# Random Forest
+rf <- train(factor(jobTraining)~., data=data.train, method="rf", metric=metric, trControl=control, verbose=FALSE)
+jobTraining_prediction<-predict(rf,newdata=data.filtered)
 ```
 
 ```{r}
@@ -199,8 +195,5 @@ colnames(result)<-colnames(label)
 write.csv(result, "prediction.csv", row.names = FALSE)
 ```
 
-```{r}
-write.csv(gpa_prediction, "gpa.csv")
-```
 
 
