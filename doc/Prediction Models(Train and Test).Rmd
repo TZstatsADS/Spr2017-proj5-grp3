@@ -8,17 +8,25 @@ output: pdf_document
 # GPA
 ```{r, message=FALSE, warning=FALSE}
 source("../lib/modelFunc.R")
+load("../data/categorical.RData")
 data.filtered <- read.csv('../data/NAreplaced.csv') #4242 1388
 select <- read.csv('../data/Updated_Features/gpa_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
 label <- read.csv('../data/train.csv')
-label<-na.omit(label)
+label<-label[!is.na(label$gpa),]
 Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  test[,i]<-sapply(test[,i], factor)
+  id <- which(!(test[,i] %in% unique(data.train[,i])))
+  test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
+}
 data.train<-cbind(label$gpa, data.train)
 colnames(data.train)[1]<-"gpa"
 
@@ -39,8 +47,19 @@ select <- read.csv('../data/Updated_Features/grit_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$grit),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  test[,i]<-sapply(test[,i], factor)
+  id <- which(!(test[,i] %in% unique(data.train[,i])))
+  test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
+}
 data.train<-cbind(label$grit, data.train)
 colnames(data.train)[1]<-"grit"
 
@@ -60,8 +79,19 @@ select <- read.csv('../data/Updated_Features/materialHardship_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$materialHardship),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  test[,i]<-sapply(test[,i], factor)
+  id <- which(!(test[,i] %in% unique(data.train[,i])))
+  test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
+}
 data.train<-cbind(label$materialHardship, data.train)
 colnames(data.train)[1]<-"materialHardship"
 
@@ -81,8 +111,19 @@ select <- read.csv('../data/Updated_Features/eviction_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$eviction),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  test[,i]<-sapply(test[,i], factor)
+  id <- which(!(test[,i] %in% unique(data.train[,i])))
+  test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
+}
 data.train<-cbind(label$eviction, data.train)
 colnames(data.train)[1]<-"eviction"
 
@@ -102,8 +143,19 @@ select <- read.csv('../data/Updated_Features/layoff_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$layoff),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  test[,i]<-sapply(test[,i], factor)
+  id <- which(!(test[,i] %in% unique(data.train[,i])))
+  test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
+}
 data.train<-cbind(label$layoff, data.train)
 colnames(data.train)[1]<-"layoff"
 
@@ -123,8 +175,19 @@ select <- read.csv('../data/Updated_Features/jobTraining_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$jobTraining),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  test[,i]<-sapply(test[,i], factor)
+  id <- which(!(test[,i] %in% unique(data.train[,i])))
+  test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
+}
 data.train<-cbind(label$jobTraining, data.train)
 colnames(data.train)[1]<-"jobTraining"
 

@@ -14,9 +14,6 @@ library(foreach)
 library(mlbench)
 library(caret)
 load("../data/categorical.RData")
-factor1<-function(x){
-  return(factor(x,levels=as.integer(unique(x))))
-}
 ```
 
 # GPA
@@ -27,15 +24,17 @@ select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] # 4242*64
 
 label <- read.csv('../data/train.csv')
-label<-na.omit(label)
+label<-label[!is.na(label$gpa),]
 Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
-for(i in cat.idx){
-  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
-  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  data.filtered[,i]<-sapply(data.filtered[,i], factor)
+  id <- which(!(data.filtered[,i] %in% unique(data.train[,i])))
+  data.filtered[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$gpa, data.train)
 colnames(data.train)[1]<-"gpa"
@@ -56,21 +55,27 @@ select <- read.csv('../data/Updated_Features/grit_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$grit),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
-for(i in cat.idx){
-  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
-  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  data.filtered[,i]<-sapply(data.filtered[,i], factor)
+  id <- which(!(data.filtered[,i] %in% unique(data.train[,i])))
+  data.filtered[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$grit, data.train)
 colnames(data.train)[1]<-"grit"
 
 # SVM
-svm_fit<-svm(grit~., data=data.train)
-svm_predictions<-predict(svm_fit,newdata=data.filtered)
+fit.gbm <- train(grit~., data=data.train, method="svmRadial", metric=metric, trControl=control, verbose=FALSE)
+svm_prediction<-predict(fit.gbm, data.filtered)
 # Random Forest
-rf <- randomForest(grit~., data=data.train)
+rf <- train(grit~., data=data.train, method="rf", metric=metric, trControl=control, verbose=FALSE)
 rf_predictons<-predict(rf, data.filtered)
 # Ensemble SVM and Random Forest
 grit_prediction<-(svm_predictions+rf_predictons)/2
@@ -83,12 +88,18 @@ select <- read.csv('../data/Updated_Features/materialHardship_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$materialHardship),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
-for(i in cat.idx){
-  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
-  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  data.filtered[,i]<-sapply(data.filtered[,i], factor)
+  id <- which(!(data.filtered[,i] %in% unique(data.train[,i])))
+  data.filtered[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$materialHardship, data.train)
 colnames(data.train)[1]<-"materialHardship"
@@ -105,12 +116,18 @@ select <- read.csv('../data/Updated_Features/eviction_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$eviction),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
-for(i in cat.idx){
-  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
-  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  data.filtered[,i]<-sapply(data.filtered[,i], factor)
+  id <- which(!(data.filtered[,i] %in% levels(data.train[,i])))
+  data.filtered[,i][id]<-sample(levels(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$eviction, data.train)
 colnames(data.train)[1]<-"eviction"
@@ -127,12 +144,18 @@ select <- read.csv('../data/Updated_Features/layoff_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$layoff),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
-for(i in cat.idx){
-  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
-  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  data.filtered[,i]<-sapply(data.filtered[,i], factor)
+  id <- which(!(data.filtered[,i] %in% levels(data.train[,i])))
+  data.filtered[,i][id]<-sample(levels(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$layoff, data.train)
 colnames(data.train)[1]<-"layoff"
@@ -149,12 +172,18 @@ select <- read.csv('../data/Updated_Features/jobTraining_features.csv')
 select.idx<-colnames(data.filtered) %in% as.character(select$Codes)
 data.filtered <- data.filtered[,select.idx] 
 
+label <- read.csv('../data/train.csv')
+label<-label[!is.na(label$jobTraining),]
+Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
+
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
-for(i in cat.idx){
-  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
-  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  data.filtered[,i]<-sapply(data.filtered[,i], factor)
+  id <- which(!(data.filtered[,i] %in% levels(data.train[,i])))
+  data.filtered[,i][id]<-sample(levels(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$jobTraining, data.train)
 colnames(data.train)[1]<-"jobTraining"
@@ -168,6 +197,10 @@ jobTraining_prediction<-predict(svm_fit,newdata=data.filtered)
 result<-data.frame(c(1:4242),gpa_prediction, grit_prediction, materialHardship_prediction, eviction_prediction, layoff_prediction, jobTraining_prediction)
 colnames(result)<-colnames(label)
 write.csv(result, "prediction.csv", row.names = FALSE)
+```
+
+```{r}
+write.csv(gpa_prediction, "gpa.csv")
 ```
 
 
