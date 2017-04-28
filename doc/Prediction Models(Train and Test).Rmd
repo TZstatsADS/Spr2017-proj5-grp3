@@ -20,6 +20,8 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+data.train<-cbind(label$gpa, data.train)
+colnames(data.train)[1]<-"gpa"
 cat.idx<-colnames(data.train) %in% categorical
 # create training and test data set
 set.seed(123)
@@ -31,8 +33,6 @@ for(i in which(cat.idx)){
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
-data.train<-cbind(label$gpa, data.train)
-colnames(data.train)[1]<-"gpa"
 
 y<-train[,1]
 model_selection_con(train[,-1], test, y)
@@ -51,6 +51,8 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+data.train<-cbind(label$grit, data.train)
+colnames(data.train)[1]<-"grit"
 cat.idx<-colnames(data.train) %in% categorical
 # create training and test data set
 set.seed(123)
@@ -62,8 +64,6 @@ for(i in which(cat.idx)){
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
-data.train<-cbind(label$grit, data.train)
-colnames(data.train)[1]<-"grit"
 
 y<-train[,1]
 model_selection_con(train[,-1], test, y)
@@ -82,6 +82,8 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+data.train<-cbind(label$materialHardship, data.train)
+colnames(data.train)[1]<-"materialHardship"
 cat.idx<-colnames(data.train) %in% categorical
 # create training and test data set
 set.seed(123)
@@ -93,8 +95,6 @@ for(i in which(cat.idx)){
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
-data.train<-cbind(label$materialHardship, data.train)
-colnames(data.train)[1]<-"materialHardship"
 
 y<-train[,1]
 model_selection_con(train[,-1], test, y)
@@ -113,6 +113,8 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+data.train<-cbind(label$eviction, data.train)
+colnames(data.train)[1]<-"eviction"
 cat.idx<-colnames(data.train) %in% categorical
 # create training and test data set
 set.seed(123)
@@ -124,8 +126,6 @@ for(i in which(cat.idx)){
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
-data.train<-cbind(label$eviction, data.train)
-colnames(data.train)[1]<-"eviction"
 
 y<-factor(train[,1])
 model_selection_cat(train[,-1], test, y)
@@ -144,6 +144,8 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+data.train<-cbind(label$layoff, data.train)
+colnames(data.train)[1]<-"layoff"
 cat.idx<-colnames(data.train) %in% categorical
 # create training and test data set
 set.seed(123)
@@ -155,8 +157,6 @@ for(i in which(cat.idx)){
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
-data.train<-cbind(label$layoff, data.train)
-colnames(data.train)[1]<-"layoff"
 
 y<-factor(train[,1])
 model_selection_cat(train[,-1], test, y)
@@ -175,6 +175,8 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+data.train<-cbind(label$jobTraining, data.train)
+colnames(data.train)[1]<-"jobTraining"
 cat.idx<-colnames(data.train) %in% categorical
 # create training and test data set
 set.seed(123)
@@ -186,8 +188,6 @@ for(i in which(cat.idx)){
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
-data.train<-cbind(label$jobTraining, data.train)
-colnames(data.train)[1]<-"jobTraining"
 
 y<-factor(train[,1])
 model_selection_cat(train[,-1], test, y)
