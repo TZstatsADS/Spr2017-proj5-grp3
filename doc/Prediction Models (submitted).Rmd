@@ -32,11 +32,13 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in cat.idx){
+  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
+  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+}
 data.train<-cbind(label$gpa, data.train)
 colnames(data.train)[1]<-"gpa"
-
-cat.idx<-colnames(data.train) %in% categorical
-data.train[,cat.idx]<-apply(data.train[,cat.idx], 2, factor1)
 
 control <- trainControl(method="repeatedcv", number=10, repeats=3)
 seed <- 7
@@ -56,6 +58,11 @@ data.filtered <- data.filtered[,select.idx]
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in cat.idx){
+  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
+  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+}
 data.train<-cbind(label$grit, data.train)
 colnames(data.train)[1]<-"grit"
 
@@ -78,6 +85,11 @@ data.filtered <- data.filtered[,select.idx]
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in cat.idx){
+  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
+  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+}
 data.train<-cbind(label$materialHardship, data.train)
 colnames(data.train)[1]<-"materialHardship"
 
@@ -95,6 +107,11 @@ data.filtered <- data.filtered[,select.idx]
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in cat.idx){
+  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
+  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+}
 data.train<-cbind(label$eviction, data.train)
 colnames(data.train)[1]<-"eviction"
 
@@ -112,6 +129,11 @@ data.filtered <- data.filtered[,select.idx]
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in cat.idx){
+  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
+  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+}
 data.train<-cbind(label$layoff, data.train)
 colnames(data.train)[1]<-"layoff"
 
@@ -129,6 +151,11 @@ data.filtered <- data.filtered[,select.idx]
 
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
+cat.idx<-colnames(data.train) %in% categorical
+for(i in cat.idx){
+  data.train[,cat.idx]<-lapply(data.train[,cat.idx], factor)
+  data.filtered[,cat.idx]<-lapply(data.filtered[,cat.idx], factor)
+}
 data.train<-cbind(label$jobTraining, data.train)
 colnames(data.train)[1]<-"jobTraining"
 
