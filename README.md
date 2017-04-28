@@ -32,9 +32,12 @@ Term: Spring 2017
 + At every iteration, it checks whether a real feature has a higher importance than the best of its shadow features and constantly removes features which are deemed highly unimportant.
 + Finally, the algorithm stops either when all features gets confirmed or rejected or it reaches a specified limit of random forest runs.
 
-+ Prediction Model:
+**Prediction Model**:
 Our team attempts to use 14 models to predict results.
-![alt tag]()
+![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/Model%20Summary.jpeg)
+
++ Final Prediction Model:
+
 
 
 
