@@ -10,11 +10,13 @@ Term: Spring 2017
 	+ Jingwen Yin
 	+ Chenyun Zhu
 	+ Hongyi Zhu
-+ Project summary: In this project, we built various predictive models on the Fragile Families Challenge data, to predict the following: GPA, Grit, Material hardship, Eviction, Layoff, and Job training.
+	
+	
+**Project summary**: In this project, we built various predictive models on the Fragile Families Challenge data, to predict the following: GPA, Grit, Material hardship, Eviction, Layoff, and Job training.
 
-+ Data: Fragile Families Challenge. It is a scientific mass collaboration combining predictive modeling,causal inference and qualitative interviews. Our project goal is to improve the lives of disadvantaged children in the US.
+**Data**: Fragile Families Challenge. It is a scientific mass collaboration combining predictive modeling,causal inference and qualitative interviews. Our project goal is to improve the lives of disadvantaged children in the US.
 
-+ Data Cleaning:
+**Data Cleaning**:
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/140.pic.jpg)
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/160.pic.jpg)
 +Assumption: Age 9 data has already included all the information from age 0-5
@@ -24,7 +26,8 @@ Term: Spring 2017
 +Categorical feature: Make NA a special level
 +Continuous feature: Create a dummy variable indicating the missing situation of the feature,Impute the missing value with median (library: Hmisc)
 
-+ Feature Selection:Boruta package
+
+**Feature Selection**: Boruta package
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/feature%20selection.png)
 
 + Firstly, it adds randomness to the given data set by creating shuffled copies of all features.
@@ -36,18 +39,12 @@ Term: Spring 2017
 Our team attempts to use 14 models to predict results.
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/Model%20Summary.jpeg)
 
-+ Final Prediction Model:
 
-
-
-
-
-
-
-
+**Final Prediction Model**:
+![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/Final%20Prediction%20Model.jpeg)
 
 	
-**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
+**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. Yue Gao is responsible for presentation, data cleaning and help to predict the results. Hongyi Zhu working with Chenyun Zhu clean the data and try to run different models. Chenyun Zhu used Boruta package to select features and work with Mengchen Li to explain the features. Mengchen Li writes the basic prediction model and Jingwen Yin improve the models.
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
