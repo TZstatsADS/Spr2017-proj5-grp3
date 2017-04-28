@@ -11,6 +11,10 @@ Term: Spring 2017
 	+ Chenyun Zhu
 	+ Hongyi Zhu
 + Project summary: In this project, we built various predictive models on the Fragile Families Challenge data, to predict the following: GPA, Grit, Material hardship, Eviction, Layoff, and Job training.
+
++ Data: Fragile Families Challenge. It is a scientific mass collaboration combining predictive modeling,causal inference and qualitative interviews. Our project goal is to improve the lives of disadvantaged children in the US.
+
++ Data Cleaning:
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
