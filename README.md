@@ -15,11 +15,14 @@ Term: Spring 2017
 	
 **Project summary**: In this project, we built various predictive models on the Fragile Families Challenge data, to predict the following: GPA, Grit, Material hardship, Eviction, Layoff, and Job training.
 
+
 **Data**: Fragile Families Challenge. It is a scientific mass collaboration combining predictive modeling,causal inference and qualitative interviews. Our project goal is to improve the lives of disadvantaged children in the US.
+
 
 **Data Cleaning**:
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/140.pic.jpg)
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/160.pic.jpg)
+
 
 + Assumption: Age 9 data has already included all the information from age 0-5
 + Continuous outcomes: GPA, Grit, Material hardship
@@ -29,17 +32,22 @@ Term: Spring 2017
 + Continuous feature: Create a dummy variable indicating the missing situation of the feature,Impute the missing value with median (library: Hmisc)
 
 
+
 **Feature Selection**: Boruta package
 ![alt tag](https://github.com/TZstatsADS/Spr2017-proj5-grp3/blob/master/figs/feature%20selection.png)
+
 
 + Firstly, it adds randomness to the given data set by creating shuffled copies of all features.
 + Then, it trains a random forest classifier on the extended data set and applies a feature importance measure to evaluate the importance of each feature where higher means more important.
 + At every iteration, it checks whether a real feature has a higher importance than the best of its shadow features and constantly removes features which are deemed highly unimportant.
 + Finally, the algorithm stops either when all features gets confirmed or rejected or it reaches a specified limit of random forest runs.
 
+
+
 **Prediction Model**:
 Our team attempts to use 14 models to predict results.
 Linear Regression, Full tree, Pruned tree, Random Forest, Conditional inference trees, Gamboostlss, Grandient Boosting, Support Vector Machine, LM+RF, SVM+RF, SVM+RF, glm, CS.O, KNN, LDA
+
 
 
 **Final Prediction Model**:
