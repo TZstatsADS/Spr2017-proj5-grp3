@@ -48,12 +48,12 @@ model_selection_con<-function(train, test, y){
   # lmLSS <-  train(x=train, y=y, method="gamboost", trControl=control, metric=metric, verbose=FALSE)
   # test.pred.gam<- predict(lmLSS,test[,-1])
   # gamErr<-Error(test, test.pred.gam[[1]])
-=======
+#=======
   # gamboostLSS
   #lmLSS <-  train(x=train, y=y, method="gamboost", trControl=control, metric=metric, verbose=FALSE)
   #test.pred.gam<- predict(lmLSS,test[,-1])
   #gamErr<-Error(test, test.pred.gam[[1]])
->>>>>>> Stashed changes
+#>>>>>>> Stashed changes
   # SVM
   svm_fit <- train(x=train, y=y, method="svmRadial", metric=metric, trControl=control, verbose=FALSE)
   svm_predictions<-predict(svm_fit,newdata=test[,-1])
@@ -85,11 +85,11 @@ model_selection_con<-function(train, test, y){
   # Model Comparision
   # Create a data frame with the error metrics for each method
   accuracy <- data.frame(Method = c("Linear Regression","Full tree","Pruned tree","Random Forest", "Conditional inference trees", "Gradient Boosting", "Support Vector Machine", "LM+RF", "SVM+RF"),
-<<<<<<< Updated upstream
+#<<<<<<< Updated upstream
                          Test.Error = c(linErr,treeErr,pruneErr, rfErr, ctErr,gbmErr, svmErr, lmrfErr, svmrfErr))
-=======
-                         Test.Error = c(linErr,treeErr,pruneErr, rfErr, ctErr, gbmErr, svmErr, lmrfErr, svmrfErr))
->>>>>>> Stashed changes
+#=======
+                         Test.Error = c(linErr,treeErr,pruneErr, rfErr, ctErr, gbmErr, svmErr, lmrfErr, svmrfErr)
+#>>>>>>> Stashed changes
   
   # Round the values and print the table
   accuracy$Test.Error <- round(accuracy$Test.Error,4)
