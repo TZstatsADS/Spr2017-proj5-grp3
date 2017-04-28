@@ -21,20 +21,18 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
-for(i in which(cat.idx)){
-  data.train[,i]<-sapply(data.train[,i], factor)
-  test[,i]<-sapply(test[,i], factor)
-  id <- which(!(test[,i] %in% unique(data.train[,i])))
-  test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
-}
-data.train<-cbind(label$gpa, data.train)
-colnames(data.train)[1]<-"gpa"
-
 # create training and test data set
 set.seed(123)
 train.index <- sample(1:nrow(data.train),800,replace = F)
 train <- data.train[train.index,] #800*64
 test <- data.train[-train.index,] #214*64
+for(i in which(cat.idx)){
+  data.train[,i]<-sapply(data.train[,i], factor)
+  id <- which(!(test[,i] %in% unique(data.train[,i])))
+  test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
+}
+data.train<-cbind(label$gpa, data.train)
+colnames(data.train)[1]<-"gpa"
 
 y<-train[,1]
 model_selection_con(train[,-1], test, y)
@@ -54,19 +52,18 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
+# create training and test data set
+set.seed(123)
+train.index <- sample(1:nrow(data.train),800,replace = F)
+train <- data.train[train.index,] #800*64
+test <- data.train[-train.index,] #214*64
 for(i in which(cat.idx)){
   data.train[,i]<-sapply(data.train[,i], factor)
-  test[,i]<-sapply(test[,i], factor)
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$grit, data.train)
 colnames(data.train)[1]<-"grit"
-
-# create training and test data set
-train.index <- sample(1:nrow(data.train),800,replace = F)
-train <- data.train[train.index,] #800*64
-test <- data.train[-train.index,] #214*64
 
 y<-train[,1]
 model_selection_con(train[,-1], test, y)
@@ -86,19 +83,18 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
+# create training and test data set
+set.seed(123)
+train.index <- sample(1:nrow(data.train),800,replace = F)
+train <- data.train[train.index,] #800*64
+test <- data.train[-train.index,] #214*64
 for(i in which(cat.idx)){
   data.train[,i]<-sapply(data.train[,i], factor)
-  test[,i]<-sapply(test[,i], factor)
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$materialHardship, data.train)
 colnames(data.train)[1]<-"materialHardship"
-
-# create training and test data set
-train.index <- sample(1:nrow(data.train),800,replace = F)
-train <- data.train[train.index,] #800*64
-test <- data.train[-train.index,] #214*64
 
 y<-train[,1]
 model_selection_con(train[,-1], test, y)
@@ -118,19 +114,18 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
+# create training and test data set
+set.seed(123)
+train.index <- sample(1:nrow(data.train),800,replace = F)
+train <- data.train[train.index,] #800*64
+test <- data.train[-train.index,] #214*64
 for(i in which(cat.idx)){
   data.train[,i]<-sapply(data.train[,i], factor)
-  test[,i]<-sapply(test[,i], factor)
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$eviction, data.train)
 colnames(data.train)[1]<-"eviction"
-
-# create training and test data set
-train.index <- sample(1:nrow(data.train),800,replace = F)
-train <- data.train[train.index,] #800*64
-test <- data.train[-train.index,] #214*64
 
 y<-factor(train[,1])
 model_selection_cat(train[,-1], test, y)
@@ -150,19 +145,18 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
+# create training and test data set
+set.seed(123)
+train.index <- sample(1:nrow(data.train),800,replace = F)
+train <- data.train[train.index,] #800*64
+test <- data.train[-train.index,] #214*64
 for(i in which(cat.idx)){
   data.train[,i]<-sapply(data.train[,i], factor)
-  test[,i]<-sapply(test[,i], factor)
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$layoff, data.train)
 colnames(data.train)[1]<-"layoff"
-
-# create training and test data set
-train.index <- sample(1:nrow(data.train),800,replace = F)
-train <- data.train[train.index,] #800*64
-test <- data.train[-train.index,] #214*64
 
 y<-factor(train[,1])
 model_selection_cat(train[,-1], test, y)
@@ -182,19 +176,18 @@ Index<-as.numeric(rownames(data.filtered))%in% label$challengeID
 data.train<-data.filtered[Index,]
 data.train<-as.data.frame(data.train)
 cat.idx<-colnames(data.train) %in% categorical
+# create training and test data set
+set.seed(123)
+train.index <- sample(1:nrow(data.train),800,replace = F)
+train <- data.train[train.index,] #800*64
+test <- data.train[-train.index,] #214*64
 for(i in which(cat.idx)){
   data.train[,i]<-sapply(data.train[,i], factor)
-  test[,i]<-sapply(test[,i], factor)
   id <- which(!(test[,i] %in% unique(data.train[,i])))
   test[,i][id]<-sample(unique(data.train[,i]),length(id), replace = TRUE)
 }
 data.train<-cbind(label$jobTraining, data.train)
 colnames(data.train)[1]<-"jobTraining"
-
-# create training and test data set
-train.index <- sample(1:nrow(data.train),800,replace = F)
-train <- data.train[train.index,] #800*64
-test <- data.train[-train.index,] #214*64
 
 y<-factor(train[,1])
 model_selection_cat(train[,-1], test, y)

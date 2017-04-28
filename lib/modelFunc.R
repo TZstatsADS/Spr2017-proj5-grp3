@@ -18,6 +18,9 @@ Error2<-function(test, pred){
 
 # Model Selection for Continuous response variables
 model_selection_con<-function(train, test, y){
+  control <- trainControl(method="repeatedcv", number=10, repeats=3)
+  seed <- 7
+  metric <- "RMSE"
   # Linear Regression
   lin.reg <- lm(y~.,data = train)
   test.pred.lin <- predict(lin.reg,test[,-1])
@@ -36,15 +39,16 @@ model_selection_con<-function(train, test, y){
   test.ct<-predict(ct, test[,-1])
   ctErr<-Error(test, test.ct) 
   # Random Forest
-  rf <- randomForest(y~., data = train)
+  rf <- train(x=train, y=y, method="rf", trControl=control, metric=metric, verbose=FALSE)
   test.rf<-predict(rf, test[,-1])
   rfErr<-Error(test, test.rf) 
+  print(2)
   # gamboostLSS
-  lmLSS <- glmboostLSS(y~., data = train)
+  lmLSS <-  train(x=train, y=y, method="gamboost", trControl=control, metric=metric, verbose=FALSE)
   test.pred.gam<- predict(lmLSS,test[,-1])
   gamErr<-Error(test, test.pred.gam[[1]])
   # SVM
-  svm_fit<-svm(y~.,data=train)
+  svm_fit <- train(x=train, y=y, method="svmRadial", metric=metric, trControl=control, verbose=FALSE)
   svm_predictions<-predict(svm_fit,newdata=test[,-1])
   svmErr<-Error(test, svm_predictions)
   # Linear Bagging
@@ -66,9 +70,6 @@ model_selection_con<-function(train, test, y){
   svmrfErr<-Error(test, predictions)
   # Ensemble--Boosting
   # Example of Boosting Algorithms
-  control <- trainControl(method="repeatedcv", number=10, repeats=3)
-  seed <- 7
-  metric <- "RMSE"
   # Stochastic Gradient Boosting
   set.seed(seed)
   fit.gbm <- train(x=train, y=y, method="gbm", metric=metric, trControl=control, verbose=FALSE)
@@ -108,11 +109,11 @@ model_selection_cat<-function(train, test, y){
   test.ct<-predict(ct, test[,-1])
   ctErr<-Error2(test, test.ct) 
   # Random Forest
-  rf <- randomForest(y~., data = train)
+  rf <- train(x=train, y=y, method="rf", trControl=control, metric=metric, verbose=FALSE)
   test.rf<-predict(rf, test[,-1])
   rfErr<-Error2(test, test.rf) 
   # SVM
-  svm_fit<-svm(y~.,data=train)
+  svm_fit <- train(x=train, y=y, method="svmRadial", metric=metric, trControl=control, verbose=FALSE)
   svm_predictions<-predict(svm_fit,newdata=test[,-1])
   svmErr<-Error2(test, svm_predictions)
   # Stochastic Gradient Boosting
